@@ -18,7 +18,13 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
 
   final List<Gank> gankList = [];
 
+  Axis _axis = Axis.vertical;
+
+  int _targetPage = 0;
+  double _targetOffset = 0.0;
+
   ScrollController _scrollController;
+  PageController _pageController;
 
   bool _isLoadEnable = true;
   bool _isNoMore = false;
@@ -26,15 +32,7 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-
     _refresh();
-
-    _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-        _loadMore();
-      }
-    });
   }
 
   @override
@@ -42,7 +40,7 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
     return Scaffold(
       appBar: _createAppBar(context),
       body: RefreshIndicator(
-        child: _createBody(),
+        child: _axis == Axis.vertical ? _createScrollBody() : _createPageBody(),
         onRefresh: _refresh,
       ),
     );
@@ -50,7 +48,8 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController?.dispose();
+    _pageController?.dispose();
     super.dispose();
   }
 
@@ -68,13 +67,11 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
     );
   }
 
-  Axis axis = Axis.vertical;
-
-  Widget _createBody() {
-    int crossAxisCount = 2;
+  Widget _createScrollBody() {
+    const int crossAxisCount = 2;
     return StaggeredGridView.countBuilder(
       physics: BouncingScrollPhysics(),
-      controller: _scrollController,
+      controller: _createScrollController(),
       crossAxisCount: crossAxisCount,
       itemCount: gankList.length + 1,
       itemBuilder: (context, index) {
@@ -85,9 +82,11 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
           return createLoadingWidget();
         }
         return GestureDetector(
-          onTap: () {
-            setState(() => axis = axis == Axis.vertical ? Axis.horizontal : Axis.vertical);
-          },
+          onTap: () => setState(() {
+            _axis = Axis.horizontal;
+            _targetPage = index;
+            _targetOffset = _scrollController.offset;
+          }),
           child: Card(
             elevation: 5,
             margin: const EdgeInsets.all(5),
@@ -106,6 +105,56 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
         return StaggeredTile.fit(index == gankList.length ? crossAxisCount : 1);
       },
     );
+  }
+
+  ScrollController _createScrollController() {
+    _scrollController?.dispose();
+    _scrollController = ScrollController(initialScrollOffset: _targetOffset);
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        _loadMore();
+      }
+    });
+    return _scrollController;
+  }
+
+  Widget _createPageBody() {
+    return PageView.builder(
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
+      controller: _createPageController(),
+      itemCount: gankList.length + 1,
+      itemBuilder: (context, index) {
+        if (index == gankList.length) {
+          if (_isNoMore) {
+            return createNoMoreWidget();
+          }
+          return createLoadingWidget();
+        }
+        return GestureDetector(
+          onTap: () => setState(() => _axis = Axis.vertical),
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: CachedNetworkImage(
+              imageUrl: gankList[index].url,
+              placeholder: (context, url) => Icon(Icons.image),
+              errorWidget: (context, url, error) => Icon(Icons.broken_image),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  PageController _createPageController() {
+    _pageController?.dispose();
+    _pageController = PageController(initialPage: _targetPage);
+    _pageController.addListener(() {
+      if (_pageController.position.pixels == _pageController.position.maxScrollExtent) {
+        _loadMore();
+      }
+    });
+    return _pageController;
   }
 
   Widget createLoadingWidget() {
