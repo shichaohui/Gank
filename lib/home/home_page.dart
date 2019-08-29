@@ -113,7 +113,7 @@ class _HomePageState extends State<_HomePage> with TickerProviderStateMixin {
   ) {
     return TabBarView(
       controller: _controller,
-      physics: BouncingScrollPhysics(),
+      physics: PageScrollPhysics(parent: BouncingScrollPhysics()),
       children: categories.map((category) => GankListWidget(data[category])).toList(),
     );
   }
