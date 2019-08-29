@@ -28,11 +28,19 @@ class _HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<_HomePage> with TickerProviderStateMixin {
+  Future<Daily> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = API().getLatest();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Daily>(
       // 加载最新数据
-      future: API().getLatest(),
+      future: _future,
       builder: (BuildContext context, AsyncSnapshot<Daily> snapshot) {
         TabBar tabBar;
         Widget bodyWidget;
