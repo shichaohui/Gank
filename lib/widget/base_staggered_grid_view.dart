@@ -17,6 +17,7 @@ class BaseStaggeredGridView<T> extends StatefulWidget {
   final Widget noMoreWidget;
 
   BaseStaggeredGridView({
+    Key key,
     this.pageSize = 20,
     @required this.pageRequest,
     @required this.crossAxisCount,
@@ -35,7 +36,8 @@ class BaseStaggeredGridView<T> extends StatefulWidget {
   })  : assert(pageSize > 0),
         assert(pageRequest != null),
         assert(crossAxisCount > 0),
-        assert(itemBuilder != null);
+        assert(itemBuilder != null),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() {
