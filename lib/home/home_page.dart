@@ -29,6 +29,7 @@ class _HomePage extends StatefulWidget {
 
 class _HomePageState extends State<_HomePage> with TickerProviderStateMixin {
   Future<Daily> _future;
+  TabController _tabController;
 
   @override
   void initState() {
@@ -54,9 +55,9 @@ class _HomePageState extends State<_HomePage> with TickerProviderStateMixin {
           // 加载成功
           List<String> categories = snapshot.data.categories;
           _filterAndSortCategories(categories);
-          TabController controller = TabController(length: categories.length, vsync: this);
-          tabBar = _initTabBar(categories, controller);
-          bodyWidget = _initTabBarView(categories, snapshot.data.result, controller);
+          _initTabController(categories);
+          tabBar = _createTabBar(categories);
+          bodyWidget = _createTabBarView(categories, snapshot.data.result);
         }
         // 构建最终显示的 Widget 树
         return Scaffold(
@@ -98,21 +99,23 @@ class _HomePageState extends State<_HomePage> with TickerProviderStateMixin {
     categories.sort();
   }
 
-  TabBar _initTabBar(List<String> categories, TabController _controller) {
+  _initTabController(List<String> categories) {
+    if (_tabController == null) {
+      _tabController = TabController(length: categories.length, vsync: this);
+    }
+  }
+
+  TabBar _createTabBar(List<String> categories) {
     return TabBar(
       isScrollable: true,
-      controller: _controller,
+      controller: _tabController,
       tabs: categories.map((category) => Tab(text: category)).toList(),
     );
   }
 
-  TabBarView _initTabBarView(
-    List<String> categories,
-    Map<String, List<Gank>> data,
-    TabController _controller,
-  ) {
+  TabBarView _createTabBarView(List<String> categories, Map<String, List<Gank>> data) {
     return TabBarView(
-      controller: _controller,
+      controller: _tabController,
       physics: PageScrollPhysics(parent: BouncingScrollPhysics()),
       children: categories.map((category) => GankListWidget(data[category])).toList(),
     );
