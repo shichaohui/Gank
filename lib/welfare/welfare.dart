@@ -95,7 +95,7 @@ class ScaleAndDragDecoration extends StatefulWidget {
 
   const ScaleAndDragDecoration({
     Key key,
-    this.maxScale = 3.0,
+    this.maxScale = 4.0,
     this.doubleTapScale = 2.0,
     @required this.child,
     this.onPressed,
