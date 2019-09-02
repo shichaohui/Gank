@@ -97,8 +97,8 @@ class ScaleAndDragDecoration extends StatefulWidget {
     this.doubleTapScale = 2.0,
     @required this.child,
     this.onPressed,
-  })  : assert(maxScale >= 1),
-        assert(doubleTapScale >= 1 && doubleTapScale <= maxScale),
+  })  : assert(maxScale >= 1.0),
+        assert(doubleTapScale >= 1.0 && doubleTapScale <= maxScale),
         super(key: key);
 
   @override
@@ -108,7 +108,7 @@ class ScaleAndDragDecoration extends StatefulWidget {
 }
 
 class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerProviderStateMixin {
-  AnimationController _controller;
+  AnimationController _scaleAnimController;
 
   ScaleUpdateDetails _latestScaleUpdateDetails;
 
@@ -120,7 +120,6 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 100));
   }
 
   @override
@@ -145,7 +144,7 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
 
   @override
   void dispose() {
-    _controller.dispose();
+    _scaleAnimController?.dispose();
     super.dispose();
   }
 
@@ -154,21 +153,7 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
   }
 
   _onDoubleTap() {
-    double newScale = _scale == 1 ? widget.doubleTapScale : 1;
-    Animation animation = Tween<double>(begin: _scale, end: newScale).animate(_controller);
-    animation.addListener(() {
-      setState(() {
-        _scaling(ScaleUpdateDetails(
-          focalPoint: _doubleTapPosition,
-          localFocalPoint: _doubleTapPosition,
-          scale: animation.value,
-          horizontalScale: animation.value,
-          verticalScale: animation.value,
-        ));
-      });
-    });
-    _controller.reset();
-    _controller.forward();
+    _animationScale(_scale == 1.0 ? widget.doubleTapScale : 1.0);
   }
 
   _onScaleUpdate(ScaleUpdateDetails details) {
@@ -189,13 +174,13 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
 
     double scaleIncrement = details.scale - _latestScaleUpdateDetails.scale;
 
-    if (_scale < 1) {
+    if (_scale <= 1.0) {
       // 以内容中心点作为缩放中心
       _offset = Offset.zero;
     } else {
       // 计算缩放后偏移前（缩放前后的内容中心对齐）的左上角坐标变化
-      double scaleOffsetX = context.size.width * (_scale - 1) / 2;
-      double scaleOffsetY = context.size.height * (_scale - 1) / 2;
+      double scaleOffsetX = context.size.width * (_scale - 1.0) / 2;
+      double scaleOffsetY = context.size.height * (_scale - 1.0) / 2;
       // 将缩放前的触摸点映射到缩放后的内容上
       double scalePointDX = (details.localFocalPoint.dx + scaleOffsetX - _offset.dx) / _scale;
       double scalePointDY = (details.localFocalPoint.dy + scaleOffsetY - _offset.dy) / _scale;
@@ -229,5 +214,28 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
 
   _onScaleEnd(ScaleEndDetails details) {
     _latestScaleUpdateDetails = null;
+
+    if (_scale < 1.0) {
+      _animationScale(1.0);
+    }
+  }
+
+  _animationScale(double targetScale) {
+    _scaleAnimController?.dispose();
+    _scaleAnimController = AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+    Animation animation = Tween<double>(begin: _scale, end: targetScale).animate(_scaleAnimController);
+    animation.addListener(() {
+      setState(() {
+        _scaling(ScaleUpdateDetails(
+          focalPoint: _doubleTapPosition,
+          localFocalPoint: _doubleTapPosition,
+          scale: animation.value,
+          horizontalScale: animation.value,
+          verticalScale: animation.value,
+        ));
+      });
+    });
+    _scaleAnimController.reset();
+    _scaleAnimController.forward();
   }
 }
