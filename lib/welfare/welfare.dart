@@ -109,7 +109,6 @@ class ScaleAndDragDecoration extends StatefulWidget {
 
 class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerProviderStateMixin {
   AnimationController _controller;
-  Animation<double> _scaleAnimation;
 
   ScaleUpdateDetails _latestScaleUpdateDetails;
 
@@ -156,15 +155,15 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
 
   _onDoubleTap() {
     double newScale = _scale == 1 ? widget.doubleTapScale : 1;
-    _scaleAnimation = Tween<double>(begin: _scale, end: newScale).animate(_controller);
-    _scaleAnimation.addListener(() {
+    Animation animation = Tween<double>(begin: _scale, end: newScale).animate(_controller);
+    animation.addListener(() {
       setState(() {
         _scaling(ScaleUpdateDetails(
           focalPoint: _doubleTapPosition,
           localFocalPoint: _doubleTapPosition,
-          scale: _scaleAnimation.value,
-          horizontalScale: _scaleAnimation.value,
-          verticalScale: _scaleAnimation.value,
+          scale: animation.value,
+          horizontalScale: animation.value,
+          verticalScale: animation.value,
         ));
       });
     });
