@@ -116,6 +116,8 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
   double _scale = 1.0;
   Offset _offset = Offset.zero;
 
+  Offset _doubleTapPosition;
+
   @override
   void initState() {
     super.initState();
@@ -148,12 +150,24 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
     super.dispose();
   }
 
-  _onPointerUp(PointerUpEvent event) {}
+  _onPointerUp(PointerUpEvent event) {
+    _doubleTapPosition = event.localPosition;
+  }
 
   _onDoubleTap() {
     double newScale = _scale == 1 ? widget.doubleTapScale : 1;
     _scaleAnimation = Tween<double>(begin: _scale, end: newScale).animate(_controller);
-    _scaleAnimation.addListener(() => setState(() => _scale = _scaleAnimation.value));
+    _scaleAnimation.addListener(() {
+      setState(() {
+        _scaling(ScaleUpdateDetails(
+          focalPoint: _doubleTapPosition,
+          localFocalPoint: _doubleTapPosition,
+          scale: _scaleAnimation.value,
+          horizontalScale: _scaleAnimation.value,
+          verticalScale: _scaleAnimation.value,
+        ));
+      });
+    });
     _controller.reset();
     _controller.forward();
   }
