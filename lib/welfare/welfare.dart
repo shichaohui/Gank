@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
@@ -95,7 +93,7 @@ class ScaleAndDragDecoration extends StatefulWidget {
 
   const ScaleAndDragDecoration({
     Key key,
-    this.maxScale = 4.0,
+    this.maxScale = 5.0,
     this.doubleTapScale = 2.0,
     @required this.child,
     this.onPressed,
@@ -116,12 +114,7 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
   ScaleUpdateDetails _latestScaleUpdateDetails;
 
   double _scale = 1.0;
-  Point _centerPoint;
-
-  Alignment _scaleAlignment = Alignment(0, 0);
-  Alignment _doubleTapAlignment = Alignment(0, 0);
-
-  Offset _translateOffset = Offset(0, 0);
+  Offset _offset = Offset.zero;
 
   @override
   void initState() {
@@ -131,7 +124,6 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
 
   @override
   Widget build(BuildContext context) {
-    _calcCenterPoint(context);
     return Listener(
       onPointerUp: _onPointerUp,
       child: GestureDetector(
@@ -139,13 +131,12 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
         onDoubleTap: _onDoubleTap,
         onScaleUpdate: _onScaleUpdate,
         onScaleEnd: _onScaleEnd,
-        child: Transform.translate(
-          offset: _translateOffset,
-          child: Transform.scale(
-            scale: _scale,
-            child: widget.child,
-            alignment: _scaleAlignment,
-          ),
+        child: Transform(
+          transform: Matrix4.identity()
+            ..translate(_offset.dx, _offset.dy)
+            ..scale(_scale, _scale),
+          child: widget.child,
+          alignment: Alignment.center,
         ),
       ),
     );
@@ -157,12 +148,9 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
     super.dispose();
   }
 
-  _onPointerUp(PointerUpEvent event) {
-    _doubleTapAlignment = _calcAlignment(event.localPosition);
-  }
+  _onPointerUp(PointerUpEvent event) {}
 
   _onDoubleTap() {
-    _scaleAlignment = _doubleTapAlignment;
     double newScale = _scale == 1 ? widget.doubleTapScale : 1;
     _scaleAnimation = Tween<double>(begin: _scale, end: newScale).animate(_controller);
     _scaleAnimation.addListener(() => setState(() => _scale = _scaleAnimation.value));
@@ -181,40 +169,52 @@ class _ScaleAndDragDecoration extends State<ScaleAndDragDecoration> with TickerP
   }
 
   _scaling(ScaleUpdateDetails details) {
-    _scaleAlignment = _calcAlignment(details.localFocalPoint);
-    if (_latestScaleUpdateDetails != null) {
-      _scale += details.scale - _latestScaleUpdateDetails.scale;
-      if (_scale > widget.maxScale) {
-        _scale = widget.maxScale;
-      } else if (_scale < 0.5) {
-        _scale = 0.5;
-      }
+    if (_latestScaleUpdateDetails == null) {
+      _latestScaleUpdateDetails = details;
+      return;
     }
+
+    double scaleIncrement = details.scale - _latestScaleUpdateDetails.scale;
+
+    if (_scale < 1) {
+      // 以内容中心点作为缩放中心
+      _offset = Offset.zero;
+    } else {
+      // 计算缩放后偏移前（缩放前后的内容中心对齐）的左上角坐标变化
+      double scaleOffsetX = context.size.width * (_scale - 1) / 2;
+      double scaleOffsetY = context.size.height * (_scale - 1) / 2;
+      // 将缩放前的触摸点映射到缩放后的内容上
+      double scalePointDX = (details.localFocalPoint.dx + scaleOffsetX - _offset.dx) / _scale;
+      double scalePointDY = (details.localFocalPoint.dy + scaleOffsetY - _offset.dy) / _scale;
+      // 计算偏移，使缩放中心在屏幕上的位置保持不变
+      _offset += Offset(
+        (context.size.width / 2 - scalePointDX) * scaleIncrement,
+        (context.size.height / 2 - scalePointDY) * scaleIncrement,
+      );
+    }
+
+    // 计算缩放比例
+    _scale += scaleIncrement;
+    if (_scale > widget.maxScale) {
+      _scale = widget.maxScale;
+    } else if (_scale < 0.5) {
+      _scale = 0.5;
+    }
+
     _latestScaleUpdateDetails = details;
   }
 
   _dragging(ScaleUpdateDetails details) {
     if (_latestScaleUpdateDetails != null) {
-      double x = details.focalPoint.dx - _latestScaleUpdateDetails.focalPoint.dx + _translateOffset.dx;
-      double y = details.focalPoint.dy - _latestScaleUpdateDetails.focalPoint.dy + _translateOffset.dy;
-      _translateOffset = Offset(x, y);
+      _offset += Offset(
+        details.focalPoint.dx - _latestScaleUpdateDetails.focalPoint.dx,
+        details.focalPoint.dy - _latestScaleUpdateDetails.focalPoint.dy,
+      );
     }
     _latestScaleUpdateDetails = details;
   }
 
   _onScaleEnd(ScaleEndDetails details) {
     _latestScaleUpdateDetails = null;
-  }
-
-  Alignment _calcAlignment(Offset position) {
-    return Alignment(
-      (position.dx - _centerPoint.x) / _centerPoint.x,
-      (position.dy - _centerPoint.y) / _centerPoint.y,
-    );
-  }
-
-  void _calcCenterPoint(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    _centerPoint = Point(size.width / 2, size.height / 2);
   }
 }
