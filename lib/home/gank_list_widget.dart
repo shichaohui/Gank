@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/entity/entity.dart';
+import 'package:gank/webview/WebViewPage.dart';
 
 class GankListWidget extends StatefulWidget {
   final List<Gank> gankList;
@@ -51,19 +52,22 @@ class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAlive
               separatorBuilder: (context, index) => Padding(padding: const EdgeInsets.all(5)),
             ),
           );
-          return Card(
-            elevation: 5,
-            margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(gank.desc),
-                  Padding(padding: const EdgeInsets.all(3)),
-                  publisherAndTimeWidget,
-                  imagesWidget,
-                ],
+          return GestureDetector(
+            onTap: showGank(widget.gankList[index]),
+            child: Card(
+              elevation: 5,
+              margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(gank.desc),
+                    Padding(padding: const EdgeInsets.all(3)),
+                    publisherAndTimeWidget,
+                    imagesWidget,
+                  ],
+                ),
               ),
             ),
           );
@@ -72,6 +76,13 @@ class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAlive
 
   @override
   bool get wantKeepAlive => true;
+
+  /// 显示 [url] 对应的干货
+  GestureTapCallback showGank(Gank gank) {
+    return () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(url: gank.url)));
+    };
+  }
 
   /// 格式化 [date] 为 yyyy-mm-dd 的格式。
   String _formatDate(String date) {
