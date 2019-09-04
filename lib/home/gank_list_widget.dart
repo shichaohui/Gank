@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/entity/entity.dart';
-import 'package:gank/webview/WebViewPage.dart';
+import 'package:gank/webview/webview_page.dart';
 
 class GankListWidget extends StatefulWidget {
   final List<Gank> gankList;

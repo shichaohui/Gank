@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
-import 'package:gank/widget/GestureZoomBox.dart';
+import 'package:gank/widget/gesture_zoom_box.dart';
 import 'package:gank/widget/super_flow_view.dart';
 
 /// 福利页面
