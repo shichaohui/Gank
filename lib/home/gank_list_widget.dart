@@ -19,6 +19,7 @@ class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     super.build(context);
     return ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: widget.gankList.length,
         itemBuilder: (context, index) {
           Gank gank = widget.gankList[index];
