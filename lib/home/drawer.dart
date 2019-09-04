@@ -25,7 +25,6 @@ class HomeDrawer extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
             },
           ),
-          ListTile(leading: Icon(Icons.video_library), title: Text("休息视频")),
         ],
       ),
     );
