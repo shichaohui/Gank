@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/widget/GestureZoomBox.dart';
-import 'package:gank/widget/base_staggered_grid_view.dart';
+import 'package:gank/widget/super_flow_view.dart';
 
 /// 福利页面
 class WelfarePage extends StatefulWidget {
@@ -18,7 +18,8 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _createAppBar(context),
-      body: BaseStaggeredGridView<Gank>(
+      body: SuperFlowView<Gank>(
+        type: FlowType.STAGGERED_GRID,
         pageRequest: (page, pageSize) async {
           Welfare welfare = await API().getWelfare(page, pageSize);
           return welfare.result;
