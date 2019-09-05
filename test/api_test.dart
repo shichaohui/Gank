@@ -16,4 +16,11 @@ void main() {
           .getWelfare(1, 10)
           .then((welfare) => print(welfare))
           .catchError((error) => print(error)));
+
+  test(
+      "get history",
+          () => API()
+          .getHistory(1, 5)
+          .then((welfare) => print(welfare))
+          .catchError((error) => print(error)));
 }

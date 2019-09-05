@@ -134,6 +134,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
   ListView createListView() {
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
       controller: _scrollController,
       itemCount: _dataList.length + 1,
       itemBuilder: _itemBuilder,
@@ -142,6 +143,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
   StaggeredGridView createStaggeredGridView() {
     return StaggeredGridView.countBuilder(
+      physics: BouncingScrollPhysics(),
       controller: _scrollController,
       crossAxisCount: widget.crossAxisCount,
       itemCount: _dataList.length + 1,

@@ -24,9 +24,16 @@ class API {
   }
 
   /// 获取第 [page] 页的 [pageCount] 条福利
-  Future<WelfareResponse> getWelfare(int page, int pageCount) async {
-    var url = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/$pageCount/$page";
+  Future<WelfareResponse> getWelfare(int page, int pageSize) async {
+    var url = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/$pageSize/$page";
     var response = await Dio().get<String>(url);
     return WelfareResponse.fromJson(json.decode(response.data));
+  }
+
+  /// 获取第 [page] 页的 [pageCount] 条历史数据
+  Future<HistoryResponse> getHistory(int page, int pageSize) async {
+    var url = "http://gank.io/api/history/content/$pageSize/$page";
+    var response = await Dio().get<String>(url);
+    return HistoryResponse.fromJson(json.decode(response.data));
   }
 }

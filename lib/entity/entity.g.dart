@@ -80,3 +80,33 @@ Welfare _$WelfareFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$WelfareToJson(Welfare instance) => <String, dynamic>{
       'url': instance.url,
     };
+
+HistoryResponse _$HistoryResponseFromJson(Map<String, dynamic> json) {
+  return HistoryResponse(
+    json['error'] as bool,
+    (json['results'] as List)
+        ?.map((e) =>
+            e == null ? null : History.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
+}
+
+Map<String, dynamic> _$HistoryResponseToJson(HistoryResponse instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'results': instance.result,
+    };
+
+History _$HistoryFromJson(Map<String, dynamic> json) {
+  return History(
+    json['title'] as String,
+    json['content'] as String,
+    json['publishedAt'] as String,
+  );
+}
+
+Map<String, dynamic> _$HistoryToJson(History instance) => <String, dynamic>{
+      'title': instance.title,
+      'content': instance.content,
+      'publishedAt': instance.publishedAt,
+    };

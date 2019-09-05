@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gank/history/history_page.dart';
 import 'package:gank/welfare/welfare.dart';
 
 /// 首页的抽屉
@@ -23,6 +24,13 @@ class HomeDrawer extends StatelessWidget {
             title: Text("福利"),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text("干货历史"),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
             },
           ),
         ],

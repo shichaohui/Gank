@@ -32,7 +32,7 @@ class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAlive
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
               Text(
-                _formatDate(gank.publishedAt),
+                gank.formatPublishedAt,
                 style: TextStyle(color: Colors.grey, fontSize: 12),
               ),
             ],
@@ -83,11 +83,5 @@ class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAlive
     return () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(url: gank.url)));
     };
-  }
-
-  /// 格式化 [date] 为 yyyy-mm-dd 的格式。
-  String _formatDate(String date) {
-    DateTime time = DateTime.parse(date);
-    return "${time.year}-${time.month.toString().padLeft(2, "0")}-${time.day.toString().padLeft(2, "0")}";
   }
 }
