@@ -9,6 +9,7 @@ enum FlowType { LIST, GRID, STAGGERED_GRID }
 
 class SuperFlowView<T> extends StatefulWidget {
   final FlowType type;
+  final ScrollPhysics physics;
   final int pageSize;
   final PageRequest<T> pageRequest;
   final int crossAxisCount;
@@ -24,6 +25,7 @@ class SuperFlowView<T> extends StatefulWidget {
   SuperFlowView({
     Key key,
     this.type = FlowType.LIST,
+    this.physics,
     this.pageSize = 20,
     @required this.pageRequest,
     this.crossAxisCount = 2,
@@ -134,7 +136,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
   ListView createListView() {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: widget.physics,
       controller: _scrollController,
       itemCount: _dataList.length + 1,
       itemBuilder: _itemBuilder,
@@ -143,7 +145,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
   StaggeredGridView createStaggeredGridView() {
     return StaggeredGridView.countBuilder(
-      physics: BouncingScrollPhysics(),
+      physics: widget.physics,
       controller: _scrollController,
       crossAxisCount: widget.crossAxisCount,
       itemCount: _dataList.length + 1,

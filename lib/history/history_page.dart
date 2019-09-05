@@ -22,6 +22,7 @@ class _HistoryPageState extends State<HistoryPage> {
         centerTitle: true,
       ),
       body: SuperFlowView<History>(
+        physics: BouncingScrollPhysics(),
         pageRequest: (page, pageSize) async {
           return (await API().getHistory(page, pageSize)).result;
         },

@@ -20,6 +20,7 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
       appBar: _createAppBar(context),
       body: SuperFlowView<Welfare>(
         type: FlowType.STAGGERED_GRID,
+        physics: BouncingScrollPhysics(),
         pageRequest: (page, pageSize) async {
           return (await API().getWelfare(page, pageSize)).result;
         },
