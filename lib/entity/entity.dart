@@ -62,15 +62,29 @@ class Gank {
   Map<String, dynamic> toJson() => _$GankToJson(this);
 }
 
-/// 福利
+/// 一次福利列表请求的响应
 @JsonSerializable()
-class Welfare {
+class WelfareResponse {
   @JsonKey(name: "error")
   final bool error;
   @JsonKey(name: "results")
-  final List<Gank> result;
+  final List<Welfare> result;
 
-  Welfare(this.error, this.result);
+  WelfareResponse(this.error, this.result);
+
+  factory WelfareResponse.fromJson(Map<String, dynamic> json) => _$WelfareResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WelfareResponseToJson(this);
+
+}
+
+/// 单条福利
+@JsonSerializable()
+class Welfare {
+  @JsonKey(name: "url")
+  final String url;
+
+  Welfare(this.url);
 
   factory Welfare.fromJson(Map<String, dynamic> json) => _$WelfareFromJson(json);
 

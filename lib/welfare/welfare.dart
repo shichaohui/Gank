@@ -18,19 +18,18 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _createAppBar(context),
-      body: SuperFlowView<Gank>(
+      body: SuperFlowView<Welfare>(
         type: FlowType.STAGGERED_GRID,
         pageRequest: (page, pageSize) async {
-          Welfare welfare = await API().getWelfare(page, pageSize);
-          return welfare.result;
+          return (await API().getWelfare(page, pageSize)).result;
         },
         crossAxisCount: 2,
-        itemBuilder: (context, index, gank) {
+        itemBuilder: (context, index, welfare) {
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => _createBigImagePage(gank.url)),
+                MaterialPageRoute(builder: (context) => _createBigImagePage(welfare.url)),
               );
             },
             child: Card(
@@ -39,9 +38,9 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
               child: Padding(
                 padding: const EdgeInsets.all(5),
                 child: Hero(
-                  tag: gank.url,
+                  tag: welfare.url,
                   child: CachedNetworkImage(
-                    imageUrl: gank.url,
+                    imageUrl: welfare.url,
                     placeholder: (context, url) => Icon(Icons.image),
                     errorWidget: (context, url, error) => Icon(Icons.broken_image),
                   ),

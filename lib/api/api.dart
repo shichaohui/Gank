@@ -24,9 +24,9 @@ class API {
   }
 
   /// 获取第 [page] 页的 [pageCount] 条福利
-  Future<Welfare> getWelfare(int page, int pageCount) async {
+  Future<WelfareResponse> getWelfare(int page, int pageCount) async {
     var url = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/$pageCount/$page";
     var response = await Dio().get<String>(url);
-    return Welfare.fromJson(json.decode(response.data));
+    return WelfareResponse.fromJson(json.decode(response.data));
   }
 }

@@ -55,17 +55,28 @@ Map<String, dynamic> _$GankToJson(Gank instance) => <String, dynamic>{
       'who': instance.who,
     };
 
-Welfare _$WelfareFromJson(Map<String, dynamic> json) {
-  return Welfare(
+WelfareResponse _$WelfareResponseFromJson(Map<String, dynamic> json) {
+  return WelfareResponse(
     json['error'] as bool,
     (json['results'] as List)
-        ?.map(
-            (e) => e == null ? null : Gank.fromJson(e as Map<String, dynamic>))
+        ?.map((e) =>
+            e == null ? null : Welfare.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }
 
-Map<String, dynamic> _$WelfareToJson(Welfare instance) => <String, dynamic>{
+Map<String, dynamic> _$WelfareResponseToJson(WelfareResponse instance) =>
+    <String, dynamic>{
       'error': instance.error,
       'results': instance.result,
+    };
+
+Welfare _$WelfareFromJson(Map<String, dynamic> json) {
+  return Welfare(
+    json['url'] as String,
+  );
+}
+
+Map<String, dynamic> _$WelfareToJson(Welfare instance) => <String, dynamic>{
+      'url': instance.url,
     };
