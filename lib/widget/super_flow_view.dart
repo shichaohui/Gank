@@ -85,7 +85,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
       }
     };
 
-    if (widget.type == FlowType.STAGGERED_GRID) {
+    if (widget.type == FlowType.GRID || widget.type == FlowType.STAGGERED_GRID) {
       _staggeredTileBuilder = (index) {
         if (index == _dataList.length) {
           return StaggeredTile.fit(widget.crossAxisCount);
