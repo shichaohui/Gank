@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gank/history/daily_body.dart';
 
 class DailyPage extends StatefulWidget {
   final String title;
@@ -19,8 +20,9 @@ class _DailyPageState extends State<DailyPage> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
+        elevation: 0,
       ),
-      body: Text("fdskla"),
+      body: DailyBody.byDate(widget.date),
     );
   }
 }
