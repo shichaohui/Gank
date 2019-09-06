@@ -36,29 +36,30 @@ class HomeDrawer extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.image),
-            title: Text("福利"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.image),
-            title: Text("干货历史"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.image),
-            title: Text("提交干货"),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitGankPage()));
-            },
-          ),
+          createListTile(context, "干货历史", Icons.history, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
+          }),
+          createListTile(context, "福利", Icons.image, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
+          }),
+          createListTile(context, "提交干货", Icons.cloud_upload, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitGankPage()));
+          }),
         ],
       ),
+    );
+  }
+
+  ListTile createListTile(
+    BuildContext context,
+    String title,
+    IconData icon,
+    GestureTapCallback onTap,
+  ) {
+    return ListTile(
+      leading: Icon(icon, color: Theme.of(context).primaryColor),
+      title: Text(title),
+      onTap: onTap,
     );
   }
 }

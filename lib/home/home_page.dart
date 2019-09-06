@@ -16,7 +16,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gank/history/daily_body.dart';
+import 'package:gank/gank_widget/daily_body.dart';
 import 'package:gank/home/drawer.dart';
 
 void main() => runApp(MyApp());

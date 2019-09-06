@@ -17,7 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
-import 'package:gank/home/gank_list_widget.dart';
+import 'package:gank/gank_widget/gank_list.dart';
 
 class DailyBody extends StatefulWidget {
   final String date;
@@ -108,7 +108,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
           child: TabBarView(
             controller: _tabController,
             physics: PageScrollPhysics(parent: BouncingScrollPhysics()),
-            children: categories.map((category) => GankListWidget(data[category])).toList(),
+            children: categories.map((category) => GankList(data[category])).toList(),
           ),
         ),
       ],

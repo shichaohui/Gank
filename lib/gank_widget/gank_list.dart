@@ -19,18 +19,18 @@ import 'package:flutter/material.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/webview/webview_page.dart';
 
-class GankListWidget extends StatefulWidget {
+class GankList extends StatefulWidget {
   final List<Gank> gankList;
 
-  GankListWidget(this.gankList);
+  GankList(this.gankList);
 
   @override
   State<StatefulWidget> createState() {
-    return _GankListWidgetState();
+    return _GankListState();
   }
 }
 
-class _GankListWidgetState extends State<GankListWidget> with AutomaticKeepAliveClientMixin {
+class _GankListState extends State<GankList> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
