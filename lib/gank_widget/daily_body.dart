@@ -17,7 +17,8 @@
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
-import 'package:gank/gank_widget/gank_list.dart';
+
+import 'gank_card.dart';
 
 class DailyBody extends StatefulWidget {
   final String date;
@@ -108,7 +109,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
           child: TabBarView(
             controller: _tabController,
             physics: PageScrollPhysics(parent: BouncingScrollPhysics()),
-            children: categories.map((category) => GankList(data[category])).toList(),
+            children: categories.map((category) => _GankList(data[category])).toList(),
           ),
         ),
       ],
@@ -120,4 +121,31 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
     categories.remove("休息视频");
     categories.sort();
   }
+}
+
+class _GankList extends StatefulWidget {
+  final List<Gank> gankList;
+
+  _GankList(this.gankList);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _GankListState();
+  }
+}
+
+class _GankListState extends State<_GankList> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: widget.gankList.length,
+        itemBuilder: (context, index) {
+          return GankCard(widget.gankList[index]);
+        });
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
