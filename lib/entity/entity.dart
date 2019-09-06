@@ -135,3 +135,18 @@ class History {
 
   Map<String, dynamic> toJson() => _$HistoryToJson(this);
 }
+
+/// 提审干货的结果
+@JsonSerializable()
+class SubmitResult {
+  @JsonKey(name: "error")
+  final bool error;
+  @JsonKey(name: "msg")
+  final String msg;
+
+  SubmitResult(this.error, this.msg);
+
+  factory SubmitResult.formJson(Map<String, dynamic> json) => _$SubmitResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubmitResultToJson(this);
+}

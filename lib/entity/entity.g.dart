@@ -110,3 +110,16 @@ Map<String, dynamic> _$HistoryToJson(History instance) => <String, dynamic>{
       'content': instance.content,
       'publishedAt': instance.publishedAt,
     };
+
+SubmitResult _$SubmitResultFromJson(Map<String, dynamic> json) {
+  return SubmitResult(
+    json['error'] as bool,
+    json['msg'] as String,
+  );
+}
+
+Map<String, dynamic> _$SubmitResultToJson(SubmitResult instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'msg': instance.msg,
+    };

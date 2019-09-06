@@ -1,5 +1,5 @@
-import 'dart:core';
 import 'dart:convert';
+import 'dart:core';
 
 import 'package:dio/dio.dart';
 import 'package:gank/entity/entity.dart';
@@ -43,5 +43,18 @@ class API {
     var url = "http://gank.io/api/history/content/$pageSize/$page";
     var response = await Dio().get<String>(url);
     return HistoryResponse.fromJson(json.decode(response.data));
+  }
+
+  /// 提审一条干货到干货集中营后台
+  Future<SubmitResult> submitGank(String url, String desc, String who, String type) async {
+    FormData data = FormData();
+    data.add("url", url);
+    data.add("desc", desc);
+    data.add("who", who);
+    data.add("type", type);
+    data.add("debug", const bool.fromEnvironment("dart.vm.product"));
+    var apiUrl = "http://gank.io/api/add2gank";
+    var response = await Dio().post<String>(apiUrl, data: data);
+    return SubmitResult.formJson(json.decode(response.data));
   }
 }
