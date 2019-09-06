@@ -15,6 +15,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:gank/category/category_page.dart';
 import 'package:gank/history/history_page.dart';
 import 'package:gank/submit/submit_gank_page.dart';
 import 'package:gank/welfare/welfare.dart';
@@ -38,6 +39,9 @@ class HomeDrawer extends StatelessWidget {
           ),
           createListTile(context, "干货历史", Icons.history, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
+          }),
+          createListTile(context, "分类", Icons.category, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage()));
           }),
           createListTile(context, "福利", Icons.image, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));

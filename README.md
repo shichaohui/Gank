@@ -6,7 +6,8 @@ A new Flutter application for gank.io .
 
 * The latest ganks.
 * The history ganks.
-* The welfares.
+* Category view ganks.
+* The welfare images.
 * Submit ganks.
 * ...
 

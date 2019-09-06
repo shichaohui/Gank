@@ -29,4 +29,11 @@ void main() {
           .submitGank("http://www.baidu.com", "descccc", "meeeee", "iOS")
           .then((result) => print(result.toJson()))
           .catchError((error) => print(error)));
+
+  test(
+      "get Android gank",
+          () => API()
+          .getCategoryGank("Android", 1, 2)
+          .then((result) => print(result))
+          .catchError((error) => print(error)));
 }

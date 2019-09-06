@@ -73,4 +73,15 @@ class API {
     var response = await Dio().post<String>(apiUrl, data: data);
     return SubmitResult.formJson(json.decode(response.data));
   }
+
+  Future<List<Gank>> getCategoryGank(String type, int page, int pageSize) async {
+    var url = "http://gank.io/api/data/$type/$pageSize/$page";
+    var response = await Dio().get<String>(url);
+    Map<String, dynamic> map = json.decode(response.data);
+    if (map["error"]) {
+      return Future.error(DioError(message: map["msg"]));
+    } else {
+      return (map["results"] as List<dynamic>).map((gankJson) => Gank.fromJson(gankJson)).toList();
+    }
+  }
 }
