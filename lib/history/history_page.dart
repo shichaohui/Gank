@@ -41,7 +41,7 @@ class _HistoryPageState extends State<HistoryPage> {
       body: SuperFlowView<History>(
         physics: BouncingScrollPhysics(),
         pageRequest: (page, pageSize) async {
-          return (await API().getHistory(page, pageSize)).result;
+          return await API().getHistory(page, pageSize);
         },
         itemBuilder: (context, index, history) {
           return GestureDetector(

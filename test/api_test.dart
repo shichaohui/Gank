@@ -13,27 +13,34 @@ void main() {
       "get welfare",
           () => API()
           .getWelfare(1, 10)
-          .then((welfare) => print(welfare.toJson()))
+          .then((gankList) => print(gankList))
           .catchError((error) => print(error)));
 
   test(
       "get history",
           () => API()
           .getHistory(1, 5)
-          .then((history) => print(history.toJson()))
+          .then((historyList) => print(historyList))
+          .catchError((error) => print(error)));
+
+  test(
+      "get daily",
+          () => API()
+          .getDaily("2019-04-10")
+          .then((daily) => print(daily))
           .catchError((error) => print(error)));
 
   test(
       "submit gank",
           () => API()
           .submitGank("http://www.baidu.com", "descccc", "meeeee", "iOS")
-          .then((result) => print(result.toJson()))
+          .then((v) => print("success"))
           .catchError((error) => print(error)));
 
   test(
       "get Android gank",
           () => API()
           .getCategoryGank("Android", 1, 2)
-          .then((result) => print(result))
+          .then((gankList) => print(gankList))
           .catchError((error) => print(error)));
 }

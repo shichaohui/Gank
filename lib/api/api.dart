@@ -20,10 +20,16 @@ import 'dart:core';
 import 'package:dio/dio.dart';
 import 'package:gank/entity/entity.dart';
 
+typedef T _ResultHandler<T>(Map<String, dynamic> json);
+
 class API {
   static API _instance;
 
-  API._();
+  Dio _dio;
+
+  API._() {
+    _dio = Dio(BaseOptions(baseUrl: "http://gank.io/api/"));
+  }
 
   factory API() {
     if (_instance == null) {
@@ -32,56 +38,57 @@ class API {
     return _instance;
   }
 
+  Future<List<T>> _handleResponse<T>(Response response, _ResultHandler<T> handler) {
+    Map<String, dynamic> map = json.decode(response.data);
+    if (map["error"]) {
+      return Future.error(DioError(message: map["msg"]));
+    } else {
+      return Future.value((map["results"] as List<dynamic>).map((json) => handler(json)).toList());
+    }
+  }
+
   /// 获取最新一天的干货
   Future<Daily> getLatest() async {
-    var url = "http://gank.io/api/today";
-    var response = await Dio().get<String>(url);
+    var response = await _dio.get<String>("today");
     return Daily.fromJson(json.decode(response.data));
   }
 
   /// 获取指定日期的干货
   Future<Daily> getDaily(String date) async {
     DateTime dateTime = DateTime.parse(date);
-    var url = "http://gank.io/api/day/${dateTime.year}/${dateTime.month}/${dateTime.day}";
-    var response = await Dio().get<String>(url);
+    var url = "day/${dateTime.year}/${dateTime.month}/${dateTime.day}";
+    var response = await _dio.get<String>(url);
     return Daily.fromJson(json.decode(response.data));
   }
 
-  /// 获取第 [page] 页的 [pageCount] 条福利
-  Future<WelfareResponse> getWelfare(int page, int pageSize) async {
-    var url = "http://gank.io/api/data/%E7%A6%8F%E5%88%A9/$pageSize/$page";
-    var response = await Dio().get<String>(url);
-    return WelfareResponse.fromJson(json.decode(response.data));
+  /// 获取第 [page] 页的 [pageSize] 条 [type] 类型的干货
+  Future<List<Gank>> getCategoryGank(String type, int page, int pageSize) async {
+    var url = "data/$type/$pageSize/$page";
+    var response = await _dio.get<String>(url);
+    return _handleResponse(response, (json) => Gank.fromJson(json));
+  }
+
+  /// 获取第 [page] 页的 [pageSize] 条福利
+  Future<List<Gank>> getWelfare(int page, int pageSize) async {
+    return await getCategoryGank("%E7%A6%8F%E5%88%A9", page, pageSize);
   }
 
   /// 获取第 [page] 页的 [pageCount] 条历史数据
-  Future<HistoryResponse> getHistory(int page, int pageSize) async {
-    var url = "http://gank.io/api/history/content/$pageSize/$page";
-    var response = await Dio().get<String>(url);
-    return HistoryResponse.fromJson(json.decode(response.data));
+  Future<List<History>> getHistory(int page, int pageSize) async {
+    var url = "history/content/$pageSize/$page";
+    var response = await _dio.get<String>(url);
+    return _handleResponse(response, (json) => History.fromJson(json));
   }
 
   /// 提审一条干货到干货集中营后台
-  Future<SubmitResult> submitGank(String url, String desc, String who, String type) async {
+  Future<void> submitGank(String url, String desc, String who, String type) async {
     FormData data = FormData();
     data.add("url", url);
     data.add("desc", desc);
     data.add("who", who);
     data.add("type", type);
     data.add("debug", const bool.fromEnvironment("dart.vm.product"));
-    var apiUrl = "http://gank.io/api/add2gank";
-    var response = await Dio().post<String>(apiUrl, data: data);
-    return SubmitResult.formJson(json.decode(response.data));
-  }
-
-  Future<List<Gank>> getCategoryGank(String type, int page, int pageSize) async {
-    var url = "http://gank.io/api/data/$type/$pageSize/$page";
-    var response = await Dio().get<String>(url);
-    Map<String, dynamic> map = json.decode(response.data);
-    if (map["error"]) {
-      return Future.error(DioError(message: map["msg"]));
-    } else {
-      return (map["results"] as List<dynamic>).map((gankJson) => Gank.fromJson(gankJson)).toList();
-    }
+    var response = await _dio.post<String>("add2gank", data: data);
+    return _handleResponse(response, (json) {});
   }
 }

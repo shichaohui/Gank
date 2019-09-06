@@ -34,11 +34,11 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _createAppBar(context),
-      body: SuperFlowView<Welfare>(
+      body: SuperFlowView<Gank>(
         type: FlowType.STAGGERED_GRID,
         physics: BouncingScrollPhysics(),
         pageRequest: (page, pageSize) async {
-          return (await API().getWelfare(page, pageSize)).result;
+          return await API().getWelfare(page, pageSize);
         },
         crossAxisCount: 2,
         itemBuilder: (context, index, welfare) {

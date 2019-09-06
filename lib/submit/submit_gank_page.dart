@@ -72,7 +72,9 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
                 icon: Icon(Icons.link),
               ),
               validator: (value) {
-                return value.length > 0 && value.startsWith(RegExp('https?://')) ? null : "请输入正确的网址";
+                return value.length > 0 && value.startsWith(RegExp('https?://'))
+                    ? null
+                    : "请输入正确的网址";
               },
             ),
             TextFormField(
@@ -151,13 +153,9 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
       isSubmitting = true;
     });
     API().submitGank(url, desc, who, _type).then((result) {
-      if (result.error) {
-        showSubmitResult(result.msg);
-      } else {
-        showSubmitResult("提交成功");
-      }
+      showSubmitResult("提交成功");
     }).catchError((error) {
-      showSubmitResult("提交失败");
+      showSubmitResult(error?.message ?? "提交失败");
     });
   }
 

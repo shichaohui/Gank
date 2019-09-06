@@ -26,7 +26,7 @@ String _formatDate(String date) {
   return "${time.year}-${time.month.toString().padLeft(2, "0")}-${time.day.toString().padLeft(2, "0")}";
 }
 
-/// 今天的干货
+/// 指定日期的干货
 @JsonSerializable()
 class Daily {
   @JsonKey(name: "error")
@@ -87,50 +87,7 @@ class Gank {
   Map<String, dynamic> toJson() => _$GankToJson(this);
 }
 
-/// 一次福利列表请求的响应
-@JsonSerializable()
-class WelfareResponse {
-  @JsonKey(name: "error")
-  final bool error;
-  @JsonKey(name: "results")
-  final List<Welfare> result;
-
-  WelfareResponse(this.error, this.result);
-
-  factory WelfareResponse.fromJson(Map<String, dynamic> json) => _$WelfareResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WelfareResponseToJson(this);
-}
-
-/// 单条福利
-@JsonSerializable()
-class Welfare {
-  @JsonKey(name: "url")
-  final String url;
-
-  Welfare(this.url);
-
-  factory Welfare.fromJson(Map<String, dynamic> json) => _$WelfareFromJson(json);
-
-  Map<String, dynamic> toJson() => _$WelfareToJson(this);
-}
-
-/// 一次历史数据列表请求的响应
-@JsonSerializable()
-class HistoryResponse {
-  @JsonKey(name: "error")
-  final bool error;
-  @JsonKey(name: "results")
-  final List<History> result;
-
-  HistoryResponse(this.error, this.result);
-
-  factory HistoryResponse.fromJson(Map<String, dynamic> json) => _$HistoryResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$HistoryResponseToJson(this);
-}
-
-/// 单条福利
+/// 指定日期的干货内容
 @JsonSerializable()
 class History {
   @JsonKey(name: "title")
@@ -150,19 +107,4 @@ class History {
   factory History.fromJson(Map<String, dynamic> json) => _$HistoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$HistoryToJson(this);
-}
-
-/// 提审干货的结果
-@JsonSerializable()
-class SubmitResult {
-  @JsonKey(name: "error")
-  final bool error;
-  @JsonKey(name: "msg")
-  final String msg;
-
-  SubmitResult(this.error, this.msg);
-
-  factory SubmitResult.formJson(Map<String, dynamic> json) => _$SubmitResultFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SubmitResultToJson(this);
 }
