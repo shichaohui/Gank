@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:gank/category/category_page.dart';
 import 'package:gank/history/history_page.dart';
+import 'package:gank/setting/setting_page.dart';
 import 'package:gank/submit/submit_gank_page.dart';
 import 'package:gank/welfare/welfare.dart';
 
@@ -33,7 +34,7 @@ class HomeDrawer extends StatelessWidget {
             child: Center(
               child: Text(
                 "Gank",
-                style: TextStyle(color: Colors.white, fontSize: 22),
+                style: TextStyle(color: Theme.of(context).primaryTextTheme.title.color, fontSize: 22),
               ),
             ),
           ),
@@ -48,6 +49,10 @@ class HomeDrawer extends StatelessWidget {
           }),
           createListTile(context, "提交干货", Icons.cloud_upload, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitGankPage()));
+          }),
+          Divider(),
+          createListTile(context, "设置", Icons.settings, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage()));
           }),
         ],
       ),

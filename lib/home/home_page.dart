@@ -18,16 +18,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/gank_widget/daily_body.dart';
 import 'package:gank/home/drawer.dart';
+import 'package:gank/setting/setting_model.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Store.init(child: MyApp()));
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.blue),
-      home: _HomePage(),
+    return Store.connect<SettingModel>(
+      builder: (context, child, model) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: model.theme,
+          home: _HomePage(),
+        );
+      },
     );
   }
 }
