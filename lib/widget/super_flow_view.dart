@@ -84,17 +84,17 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
   void initState() {
     super.initState();
 
-    _future = _loadData();
+    _loadData();
 
     _itemBuilder = (context, index) {
       if (_dataList.isEmpty) {
-        return widget.emptyWidget ?? emptyWidget();
+        return emptyWidget();
       } else if (index < _dataList.length) {
         return widget.itemBuilder(context, index, _dataList[index]);
       } else if (_isNoMore) {
-        return widget.noMoreWidget ?? noMoreWidget();
+        return noMoreWidget();
       } else {
-        return widget.loadingMoreWidget ?? loadingMoreWidget();
+        return loadingMoreWidget();
       }
     };
 
@@ -123,9 +123,9 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
       child: FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return widget.loadingWidget ?? loadingWidget();
+            return loadingWidget();
           } else if (snapshot.hasError || !snapshot.hasData) {
-            return widget.errorWidget ?? errorWidget();
+            return errorWidget();
           } else {
             switch (widget.type) {
               case FlowType.GRID:
@@ -146,29 +146,41 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
   }
 
   Widget loadingWidget() {
-    return const Center(child: CircularProgressIndicator());
+    return widget.loadingWidget ?? const Center(child: CircularProgressIndicator());
   }
 
   Widget errorWidget() {
-    return Center(child: Text(GankLocalizations.of(context).loadError));
+    return Center(
+      child: FlatButton(
+        onPressed: () => setState(() => _loadData()),
+        child: widget.errorWidget ??
+            Text(
+              GankLocalizations.of(context).loadError,
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+      ),
+    );
   }
 
   Widget emptyWidget() {
-    return Center(child: Text(GankLocalizations.of(context).empty));
+    return widget.emptyWidget ?? Center(child: Text(GankLocalizations.of(context).empty));
   }
 
   Widget loadingMoreWidget() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: FractionallySizedBox(widthFactor: .5, child: LinearProgressIndicator())),
-    );
+    return widget.loadingMoreWidget ??
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Center(
+              child: FractionallySizedBox(widthFactor: .5, child: LinearProgressIndicator())),
+        );
   }
 
   Widget noMoreWidget() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: Text(GankLocalizations.of(context).noMore)),
-    );
+    return widget.noMoreWidget ??
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Center(child: Text(GankLocalizations.of(context).noMore)),
+        );
   }
 
   ListView createListView() {
@@ -197,15 +209,19 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     super.dispose();
   }
 
-  Future<List<T>> _loadData() async {
-    _isLoading = true;
-    _page = 1;
-    List<T> list = await widget.pageRequest(_page, widget.pageSize);
-    _dataList.clear();
-    _dataList.addAll(list);
-    _isLoading = false;
-    _isNoMore = list.length < widget.pageSize;
-    return list;
+  _loadData() {
+    Future<List<T>> _load() async {
+      _isLoading = true;
+      _page = 1;
+      List<T> list = await widget.pageRequest(_page, widget.pageSize);
+      _dataList.clear();
+      _dataList.addAll(list);
+      _isLoading = false;
+      _isNoMore = list.length < widget.pageSize;
+      return list;
+    }
+
+    _future = _load();
   }
 
   Future<void> _refresh() async {

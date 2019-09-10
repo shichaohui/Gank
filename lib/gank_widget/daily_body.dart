@@ -41,7 +41,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _future = widget.date == "" ? API().getLatest() : API().getDaily(widget.date);
+    _loadData();
   }
 
   @override
@@ -67,6 +67,10 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
     );
   }
 
+  _loadData() {
+    _future = widget.date == "" ? API().getLatest() : API().getDaily(widget.date);
+  }
+
   Widget _createLoadingBody() {
     return Center(child: CircularProgressIndicator());
   }
@@ -78,7 +82,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
           GankLocalizations.of(context).loadError,
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
-        onPressed: () => setState(() {}),
+        onPressed: () => setState(() => _loadData()),
       ),
     );
   }
