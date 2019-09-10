@@ -30,9 +30,9 @@
     "type": "text",
     "placeholders": {}
   },
-  "releaseGankTitle": "提交",
+  "releaseGankTitle": "发布",
   "@releaseGankTitle": {
-    "description": "提交干货页面的标题",
+    "description": "发布干货页面的标题",
     "type": "text",
     "placeholders": {}
   },
@@ -126,27 +126,27 @@
     "type": "text",
     "placeholders": {}
   },
-  "release": "提交",
+  "release": "发布",
   "@release": {
-    "description": "提交",
+    "description": "发布",
     "type": "text",
     "placeholders": {}
   },
-  "releasing": "正在提交...",
+  "releasing": "正在发布...",
   "@releasing": {
     "description": "",
     "type": "text",
     "placeholders": {}
   },
-  "releaseFailed": "提交失败",
+  "releaseFailed": "发布失败",
   "@releaseFailed": {
-    "description": "提交干货失败",
+    "description": "发布干货失败",
     "type": "text",
     "placeholders": {}
   },
-  "releaseSuccess": "提交成功",
+  "releaseSuccess": "发布成功",
   "@releaseSuccess": {
-    "description": "提交干货成功",
+    "description": "发布干货成功",
     "type": "text",
     "placeholders": {}
   },
