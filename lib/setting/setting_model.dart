@@ -22,7 +22,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// 设置
 class Settings {
-
   /// 通过 [primaryColor] 创建主题
   static ThemeData _createThemeData(Color primaryColor) {
     return ThemeData(primarySwatch: primaryColor);
@@ -52,13 +51,15 @@ class Settings {
 
   /// 当前使用的主题
   ThemeData theme;
-  /// 当前使用的语言
+
+  /// 当前使用的语言，null 表示跟随系统
   Locale locale;
 }
 
 class SettingModel extends Settings with ChangeNotifier {
   final String _keyTheme = "Theme";
   final String _keyLocale = "Locale";
+  final String _localeFollowSystem = "LocaleFollowSystem";
 
   SettingModel() {
     _init();
@@ -67,7 +68,7 @@ class SettingModel extends Settings with ChangeNotifier {
   void _init() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     theme = Settings.themeMap[preferences.get(_keyTheme) ?? Settings.themeMap.keys.first];
-    locale = Settings.localeMap[preferences.get(_keyLocale) ?? Settings.localeMap.keys.first];
+    locale = Settings.localeMap[preferences.get(_keyLocale) ?? _localeFollowSystem];
     notifyListeners();
   }
 
@@ -88,21 +89,35 @@ class SettingModel extends Settings with ChangeNotifier {
     notifyListeners();
   }
 
-  /// 切换当前语言为 [locale]
+  /// 切换语言为跟随系统设置
+  Future setLocaleFollowSystem(BuildContext context) async {
+    setLocale(context, null);
+  }
+
+  /// 切换当前语言为 [locale]，[locale] 为 null 表示跟随系统设置
   Future setLocale(BuildContext context, Locale locale) async {
-    if (!Settings.localeMap.containsValue(locale)) {
+    if (locale != null && !Settings.localeMap.containsValue(locale)) {
       throw Exception(GankLocalizations.of(context).localeError);
     }
     this.locale = locale;
 
-    for (String localeName in Settings.localeMap.keys) {
-      if (Settings.localeMap[localeName] == locale) {
-        (await SharedPreferences.getInstance()).setString(_keyLocale, localeName);
-        break;
-      }
+    String localeTag = _localeFollowSystem;
+    if (locale != null) {
+      localeTag = findKey<String>(Settings.localeMap, locale);
     }
+    (await SharedPreferences.getInstance()).setString(_keyLocale, localeTag);
 
     notifyListeners();
+  }
+
+  /// 查找 [value] 对应的 key
+  T findKey<T>(Map<T, dynamic> map, dynamic value) {
+    for (T key in map.keys) {
+      if (map[key] == value) {
+        return key;
+      }
+    }
+    return null;
   }
 }
 

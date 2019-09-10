@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-09-10T12:12:29.967398",
+  "@@last_modified": "2019-09-10T17:45:45.974496",
   "appTitle": "Gank",
   "@appTitle": {
     "description": "Title for current application",
@@ -153,6 +153,12 @@
   "confirm": "Confirm",
   "@confirm": {
     "description": "Confirm",
+    "type": "text",
+    "placeholders": {}
+  },
+  "followSystem": "Follow System",
+  "@followSystem": {
+    "description": "follow system",
     "type": "text",
     "placeholders": {}
   }

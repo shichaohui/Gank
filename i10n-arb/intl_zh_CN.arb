@@ -1,5 +1,6 @@
 {
   "@@last_modified": "2019-09-10T11:13:40.765184",
+  "@@locale": "zh_CN",
   "appTitle": "干货",
   "@appTitle": {
     "description": "当前应用程序的标题",
@@ -153,6 +154,12 @@
   "confirm": "确认",
   "@confirm": {
     "description": "确认",
+    "type": "text",
+    "placeholders": {}
+  },
+  "followSystem": "跟随系统",
+  "@followSystem": {
+    "description": "跟随系统",
     "type": "text",
     "placeholders": {}
   }

@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryTitle" : MessageLookupByLibrary.simpleMessage("分类"),
     "confirm" : MessageLookupByLibrary.simpleMessage("确认"),
     "empty" : MessageLookupByLibrary.simpleMessage("空数据"),
+    "followSystem" : MessageLookupByLibrary.simpleMessage("跟随系统"),
     "gankDesc" : MessageLookupByLibrary.simpleMessage("干货描述"),
     "gankDescError" : MessageLookupByLibrary.simpleMessage("请输入正确的描述信息"),
     "gankUrl" : MessageLookupByLibrary.simpleMessage("干货地址"),

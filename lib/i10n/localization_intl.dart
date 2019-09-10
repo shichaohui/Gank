@@ -241,6 +241,14 @@ class GankLocalizations {
     );
   }
 
+  String get followSystem{
+    return Intl.message(
+      'Follow System',
+      name: 'followSystem',
+      desc: 'follow system',
+    );
+  }
+
 }
 
 class GankLocalizationsDelegate extends LocalizationsDelegate<GankLocalizations> {

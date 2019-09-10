@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "categoryTitle" : MessageLookupByLibrary.simpleMessage("Category"),
     "confirm" : MessageLookupByLibrary.simpleMessage("Confirm"),
     "empty" : MessageLookupByLibrary.simpleMessage("Empty"),
+    "followSystem" : MessageLookupByLibrary.simpleMessage("Follow System"),
     "gankDesc" : MessageLookupByLibrary.simpleMessage("Gank desc"),
     "gankDescError" : MessageLookupByLibrary.simpleMessage("Please input description"),
     "gankUrl" : MessageLookupByLibrary.simpleMessage("Gank url"),
