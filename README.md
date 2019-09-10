@@ -4,7 +4,7 @@ A new Flutter application for gank.io .
 
 ## Screenshots
 
-<img src="./screenshots/home.jpg" width=200><img src="./screenshots/drawer.jpg" width=200><img src="./screenshots/theme.jpg" width=200><img src="./screenshots/language.jpg" width=200><img src="./screenshots/history.jpg" width=200><img src="./screenshots/category.jpg" width=200><img src="./screenshots/welfare.jpg" width=200><img src="./screenshots/release.jpg" width=200>
+<img src="./screenshots/home.jpg" width=200> <img src="./screenshots/drawer.jpg" width=200> <img src="./screenshots/theme.jpg" width=200> <img src="./screenshots/language.jpg" width=200> <img src="./screenshots/category.jpg" width=200> <img src="./screenshots/history.jpg" width=200> <img src="./screenshots/welfare.jpg" width=200> <img src="./screenshots/release.jpg" width=200>
 
 ## Features
 
@@ -27,6 +27,7 @@ A new Flutter application for gank.io .
 
 ## Licensed
 
+```
 Copyright (c) 2015-2019 StoneHui
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,3 +41,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
