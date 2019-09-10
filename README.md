@@ -8,7 +8,8 @@ A new Flutter application for gank.io .
 * The history ganks.
 * Category view ganks.
 * The welfare images.
-* Submit ganks.
+* Release ganks.
+* Switch theme and language
 * ...
 
 ## What can you get?
@@ -16,6 +17,8 @@ A new Flutter application for gank.io .
 * The basis of flutter.
 * Custom zoom box for image or any child widget.
 * Refresh and load more of the ListView/GridView.
+* Use provide to achieve skin(Theme) switching.
+* Use intl to do i18n.
 * ...
 
 ## Licensed
