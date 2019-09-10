@@ -73,11 +73,11 @@ class GankLocalizations {
     );
   }
 
-  String get submitGankTitle {
+  String get releaseGankTitle {
     return Intl.message(
-      'Submit Gank',
-      name: 'submitGankTitle',
-      desc: 'Title for submit ganks page',
+      'Release',
+      name: 'releaseGankTitle',
+      desc: 'Title for release ganks page',
     );
   }
 
@@ -189,7 +189,7 @@ class GankLocalizations {
     return Intl.message(
       'Nickname',
       name: 'gankWho',
-      desc: 'The nickname of the submitter',
+      desc: 'The nickname of the releaser',
     );
   }
 
@@ -201,35 +201,35 @@ class GankLocalizations {
     );
   }
 
-  String get submit {
+  String get release {
     return Intl.message(
-      'Submit',
-      name: 'submit',
-      desc: 'Submit',
+      'Release',
+      name: 'release',
+      desc: 'Release',
     );
   }
 
-  String get submitting {
+  String get releasing {
     return Intl.message(
-      'Submitting',
-      name: 'submitting',
-      desc: 'Submitting gank',
+      'Releasing',
+      name: 'releasing',
+      desc: 'Releasing gank',
     );
   }
 
-  String get submitFailed {
+  String get releaseFailed {
     return Intl.message(
-      'Submit failed',
-      name: 'submitFailed',
-      desc: 'Submit gank failed',
+      'Release failed',
+      name: 'releaseFailed',
+      desc: 'Release gank failed',
     );
   }
 
-  String get submitSuccess{
+  String get releaseSuccess{
     return Intl.message(
-      'Submit success',
-      name: 'submitSuccess',
-      desc: 'Submit gank success',
+      'Release success',
+      name: 'releaseSuccess',
+      desc: 'Release gank success',
     );
   }
 

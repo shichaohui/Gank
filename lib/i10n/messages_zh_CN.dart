@@ -39,11 +39,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "localeError" : MessageLookupByLibrary.simpleMessage("传入的 Local 不在预置列表中"),
     "noMore" : MessageLookupByLibrary.simpleMessage("没有更多数据了"),
     "settingsTitle" : MessageLookupByLibrary.simpleMessage("设置"),
-    "submit" : MessageLookupByLibrary.simpleMessage("提交"),
-    "submitFailed" : MessageLookupByLibrary.simpleMessage("提交失败"),
-    "submitGankTitle" : MessageLookupByLibrary.simpleMessage("提交"),
-    "submitSuccess" : MessageLookupByLibrary.simpleMessage("提交成功"),
-    "submitting" : MessageLookupByLibrary.simpleMessage("正在提交..."),
     "theme" : MessageLookupByLibrary.simpleMessage("主题"),
     "themeError" : MessageLookupByLibrary.simpleMessage("传入的 ThemeData 不在预置列表中"),
     "welfareTitle" : MessageLookupByLibrary.simpleMessage("福利")

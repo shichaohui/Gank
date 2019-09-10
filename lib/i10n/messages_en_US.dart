@@ -39,11 +39,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "localeError" : MessageLookupByLibrary.simpleMessage("The passing Locale is not in the preset list"),
     "noMore" : MessageLookupByLibrary.simpleMessage("No more"),
     "settingsTitle" : MessageLookupByLibrary.simpleMessage("Settings"),
-    "submit" : MessageLookupByLibrary.simpleMessage("Submit"),
-    "submitFailed" : MessageLookupByLibrary.simpleMessage("Submit failed"),
-    "submitGankTitle" : MessageLookupByLibrary.simpleMessage("Submit Gank"),
-    "submitSuccess" : MessageLookupByLibrary.simpleMessage("Submit success"),
-    "submitting" : MessageLookupByLibrary.simpleMessage("Submitting"),
     "theme" : MessageLookupByLibrary.simpleMessage("Theme"),
     "themeError" : MessageLookupByLibrary.simpleMessage("The passing ThemeData is not in the preset list"),
     "welfareTitle" : MessageLookupByLibrary.simpleMessage("Welfare")

@@ -33,7 +33,7 @@ void main() {
   test(
       "submit gank",
           () => API()
-          .submitGank("http://www.baidu.com", "descccc", "meeeee", "iOS")
+          .releaseGank("http://www.baidu.com", "descccc", "meeeee", "iOS")
           .then((v) => print("success"))
           .catchError((error) => print(error)));
 

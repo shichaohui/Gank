@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/i10n/localization_intl.dart';
 
-class SubmitGankPage extends StatefulWidget {
+class ReleaseGankPage extends StatefulWidget {
   final List<String> typeList = [
     "Android",
     "iOS",
@@ -32,18 +32,18 @@ class SubmitGankPage extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _SubmitGankPageState();
+    return _ReleaseGankPageState();
   }
 }
 
-class _SubmitGankPageState extends State<SubmitGankPage> {
+class _ReleaseGankPageState extends State<ReleaseGankPage> {
   GlobalKey _formKey = new GlobalKey<FormState>();
   TextEditingController _urlController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _nicknameController = TextEditingController();
   String _type;
 
-  bool isSubmitting = false;
+  bool isReleasing = false;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
     GankLocalizations localizations = GankLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.submitGankTitle),
+        title: Text(localizations.releaseGankTitle),
         centerTitle: true,
       ),
       body: Form(
@@ -113,14 +113,14 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
               ),
             ),
             IgnorePointer(
-              ignoring: isSubmitting,
+              ignoring: isReleasing,
               child: RaisedButton(
                 color: Theme.of(context).primaryColor,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Offstage(
-                      offstage: !isSubmitting,
+                      offstage: !isReleasing,
                       child: SizedBox.fromSize(
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
@@ -131,14 +131,14 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      isSubmitting ? localizations.submitting : localizations.submit,
+                      isReleasing ? localizations.releasing : localizations.release,
                       style: TextStyle(color: Theme.of(context).primaryTextTheme.title.color),
                     ),
                   ],
                 ),
                 onPressed: () {
                   if ((_formKey.currentState as FormState).validate()) {
-                    submit(_urlController.text, _descController.text, _nicknameController.text);
+                    release(_urlController.text, _descController.text, _nicknameController.text);
                   }
                 },
               ),
@@ -149,20 +149,20 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
     );
   }
 
-  submit(String url, String desc, String who) {
+  release(String url, String desc, String who) {
     setState(() {
-      isSubmitting = true;
+      isReleasing = true;
     });
-    API().submitGank(url, desc, who, _type).then((result) {
-      showSubmitResult(GankLocalizations.of(context).submitSuccess);
+    API().releaseGank(url, desc, who, _type).then((result) {
+      showReleaseResult(GankLocalizations.of(context).releaseSuccess);
     }).catchError((error) {
-      showSubmitResult(error?.message ?? GankLocalizations.of(context).submitFailed);
+      showReleaseResult(error?.message ?? GankLocalizations.of(context).releaseFailed);
     });
   }
 
-  showSubmitResult(String msg) {
+  showReleaseResult(String msg) {
     setState(() {
-      isSubmitting = false;
+      isReleasing = false;
     });
     showDialog(
       context: context,

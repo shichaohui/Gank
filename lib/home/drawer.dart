@@ -19,7 +19,7 @@ import 'package:gank/category/category_page.dart';
 import 'package:gank/history/history_page.dart';
 import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_page.dart';
-import 'package:gank/submit/submit_gank_page.dart';
+import 'package:gank/release/release_gank_page.dart';
 import 'package:gank/welfare/welfare.dart';
 
 /// 首页的抽屉
@@ -49,8 +49,8 @@ class HomeDrawer extends StatelessWidget {
           createListTile(context, localizations.welfareTitle, Icons.image, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
           }),
-          createListTile(context, localizations.submitGankTitle, Icons.cloud_upload, () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitGankPage()));
+          createListTile(context, localizations.releaseGankTitle, Icons.cloud_upload, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ReleaseGankPage()));
           }),
           Divider(),
           createListTile(context, localizations.settingsTitle, Icons.settings, () {

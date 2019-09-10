@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-09-10T11:19:48.077016",
+  "@@last_modified": "2019-09-10T12:12:29.967398",
   "appTitle": "Gank",
   "@appTitle": {
     "description": "Title for current application",
@@ -30,9 +30,9 @@
     "type": "text",
     "placeholders": {}
   },
-  "submitGankTitle": "Submit Gank",
-  "@submitGankTitle": {
-    "description": "Title for submit ganks page",
+  "releaseGankTitle": "Release",
+  "@releaseGankTitle": {
+    "description": "Title for release ganks page",
     "type": "text",
     "placeholders": {}
   },
@@ -116,7 +116,7 @@
   },
   "gankWho": "Nickname",
   "@gankWho": {
-    "description": "The nickname of the submitter",
+    "description": "The nickname of the releaser",
     "type": "text",
     "placeholders": {}
   },
@@ -126,27 +126,27 @@
     "type": "text",
     "placeholders": {}
   },
-  "submit": "Submit",
-  "@submit": {
-    "description": "Submit",
+  "release": "Release",
+  "@release": {
+    "description": "Release",
     "type": "text",
     "placeholders": {}
   },
-  "submitting": "Submitting",
-  "@submitting": {
-    "description": "Submitting gank",
+  "releasing": "Releasing",
+  "@releasing": {
+    "description": "Releasing gank",
     "type": "text",
     "placeholders": {}
   },
-  "submitFailed": "Submit failed",
-  "@submitFailed": {
-    "description": "Submit gank failed",
+  "releaseFailed": "Release failed",
+  "@releaseFailed": {
+    "description": "Release gank failed",
     "type": "text",
     "placeholders": {}
   },
-  "submitSuccess": "Submit success",
-  "@submitSuccess": {
-    "description": "Submit gank success",
+  "releaseSuccess": "Release success",
+  "@releaseSuccess": {
+    "description": "Release gank success",
     "type": "text",
     "placeholders": {}
   },

@@ -81,7 +81,7 @@ class API {
   }
 
   /// 提审一条干货到干货集中营后台
-  Future<void> submitGank(String url, String desc, String who, String type) async {
+  Future<void> releaseGank(String url, String desc, String who, String type) async {
     FormData data = FormData();
     data.add("url", url);
     data.add("desc", desc);
