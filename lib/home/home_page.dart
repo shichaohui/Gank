@@ -16,46 +16,19 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gank/gank_widget/daily_body.dart';
 import 'package:gank/home/drawer.dart';
 import 'package:gank/i10n/localization_intl.dart';
-import 'package:gank/setting/setting_model.dart';
-
-void main() => runApp(Store.init(child: MyApp()));
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Store.connect<SettingModel>(
-      builder: (context, child, settingModel) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          onGenerateTitle: (context) => GankLocalizations.of(context).appTitle,
-          theme: settingModel.theme,
-          locale: settingModel.locale,
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GankLocalizationsDelegate.delegate
-          ],
-          supportedLocales: Settings.localeMap.values.toList(),
-          home: _HomePage(),
-        );
-      },
-    );
-  }
-}
 
 /// 主页
-class _HomePage extends StatefulWidget {
-  _HomePage({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<_HomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
