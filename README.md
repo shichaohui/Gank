@@ -2,6 +2,10 @@
 
 A new Flutter application for gank.io .
 
+## Screenshots
+
+<img src="./screenshots/home.jpg" width=200><img src="./screenshots/drawer.jpg" width=200><img src="./screenshots/theme.jpg" width=200><img src="./screenshots/language.jpg" width=200><img src="./screenshots/history.jpg" width=200><img src="./screenshots/category.jpg" width=200><img src="./screenshots/welfare.jpg" width=200><img src="./screenshots/release.jpg" width=200>
+
 ## Features
 
 * The latest ganks.
