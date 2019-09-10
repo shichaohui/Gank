@@ -18,6 +18,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/widget/gesture_zoom_box.dart';
 import 'package:gank/widget/super_flow_view.dart';
 
@@ -79,7 +80,7 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
           color: Theme.of(context).primaryTextTheme.title.color,
         ),
       ),
-      title: Text("福利"),
+      title: Text(GankLocalizations.of(context).welfareTitle),
       centerTitle: true,
     );
   }

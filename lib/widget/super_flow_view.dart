@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:gank/i10n/localization_intl.dart';
 
 typedef Future<List<T>> PageRequest<T>(int page, int pageSize);
 typedef Widget ItemBuilder<T>(BuildContext context, int index, T item);
@@ -47,17 +48,11 @@ class SuperFlowView<T> extends StatefulWidget {
     this.crossAxisCount = 2,
     @required this.itemBuilder,
     this.staggeredTileBuilder,
-    this.loadingWidget = const Center(child: CircularProgressIndicator()),
-    this.errorWidget = const Center(child: Text("加载失败，下拉重新加载")),
-    this.emptyWidget = const Center(child: Text("数据为空")),
-    this.loadingMoreWidget = const Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: FractionallySizedBox(widthFactor: .5, child: LinearProgressIndicator())),
-    ),
-    this.noMoreWidget = const Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: Text("没有更多数据了")),
-    ),
+    this.loadingWidget,
+    this.errorWidget,
+    this.emptyWidget,
+    this.loadingMoreWidget,
+    this.noMoreWidget,
   })  : assert(pageSize > 0),
         assert(pageRequest != null),
         assert(crossAxisCount > 0),
@@ -93,13 +88,13 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
     _itemBuilder = (context, index) {
       if (_dataList.isEmpty) {
-        return widget.emptyWidget;
+        return widget.emptyWidget ?? emptyWidget();
       } else if (index < _dataList.length) {
         return widget.itemBuilder(context, index, _dataList[index]);
       } else if (_isNoMore) {
-        return widget.noMoreWidget;
+        return widget.noMoreWidget ?? noMoreWidget();
       } else {
-        return widget.loadingMoreWidget;
+        return widget.loadingMoreWidget ?? loadingMoreWidget();
       }
     };
 
@@ -128,9 +123,9 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
       child: FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return widget.loadingWidget;
+            return widget.loadingWidget ?? loadingWidget();
           } else if (snapshot.hasError || !snapshot.hasData) {
-            return widget.errorWidget;
+            return widget.errorWidget ?? errorWidget();
           } else {
             switch (widget.type) {
               case FlowType.GRID:
@@ -147,6 +142,32 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
         future: _future,
       ),
       onRefresh: _refresh,
+    );
+  }
+
+  Widget loadingWidget() {
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  Widget errorWidget() {
+    return Center(child: Text(GankLocalizations.of(context).loadError));
+  }
+
+  Widget emptyWidget() {
+    return Center(child: Text(GankLocalizations.of(context).empty));
+  }
+
+  Widget loadingMoreWidget() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Center(child: FractionallySizedBox(widthFactor: .5, child: LinearProgressIndicator())),
+    );
+  }
+
+  Widget noMoreWidget() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Center(child: Text(GankLocalizations.of(context).noMore)),
     );
   }
 

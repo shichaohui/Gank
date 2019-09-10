@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:gank/category/category_page.dart';
 import 'package:gank/history/history_page.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_page.dart';
 import 'package:gank/submit/submit_gank_page.dart';
 import 'package:gank/welfare/welfare.dart';
@@ -25,6 +26,7 @@ import 'package:gank/welfare/welfare.dart';
 class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    GankLocalizations localizations = GankLocalizations.of(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -33,25 +35,25 @@ class HomeDrawer extends StatelessWidget {
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: Center(
               child: Text(
-                "Gank",
+                GankLocalizations.of(context).appTitle,
                 style: TextStyle(color: Theme.of(context).primaryTextTheme.title.color, fontSize: 22),
               ),
             ),
           ),
-          createListTile(context, "干货历史", Icons.history, () {
+          createListTile(context, localizations.historyTitle, Icons.history, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
           }),
-          createListTile(context, "分类", Icons.category, () {
+          createListTile(context, localizations.categoryTitle, Icons.category, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage()));
           }),
-          createListTile(context, "福利", Icons.image, () {
+          createListTile(context, localizations.welfareTitle, Icons.image, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
           }),
-          createListTile(context, "提交干货", Icons.cloud_upload, () {
+          createListTile(context, localizations.submitGankTitle, Icons.cloud_upload, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => SubmitGankPage()));
           }),
           Divider(),
-          createListTile(context, "设置", Icons.settings, () {
+          createListTile(context, localizations.settingsTitle, Icons.settings, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage()));
           }),
         ],

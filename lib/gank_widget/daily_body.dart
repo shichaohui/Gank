@@ -17,6 +17,7 @@
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
+import 'package:gank/i10n/localization_intl.dart';
 
 import 'gank_card.dart';
 
@@ -74,7 +75,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
     return Center(
       child: FlatButton(
         child: Text(
-          "加载失败，点我重试",
+          GankLocalizations.of(context).loadError,
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
         onPressed: () => setState(() {}),

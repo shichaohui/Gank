@@ -16,9 +16,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
+import 'package:gank/i10n/localization_intl.dart';
 
 class SubmitGankPage extends StatefulWidget {
-  final String title = "提交干货";
   final List<String> typeList = [
     "Android",
     "iOS",
@@ -53,9 +53,10 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
 
   @override
   Widget build(BuildContext context) {
+    GankLocalizations localizations = GankLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(localizations.submitGankTitle),
         centerTitle: true,
       ),
       body: Form(
@@ -68,38 +69,38 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
               autofocus: true,
               controller: _urlController,
               decoration: InputDecoration(
-                labelText: "干货地址",
+                labelText: localizations.gankUrl,
                 icon: Icon(Icons.link),
               ),
               validator: (value) {
                 return value.length > 0 && value.startsWith(RegExp('https?://'))
                     ? null
-                    : "请输入正确的网址";
+                    : localizations.gankUrlError;
               },
             ),
             TextFormField(
               controller: _descController,
               decoration: InputDecoration(
-                labelText: "干货描述",
+                labelText: localizations.gankDesc,
                 icon: Icon(Icons.description),
               ),
               validator: (value) {
-                return value.length > 0 ? null : "请对干货进行简单描述";
+                return value.length > 0 ? null : localizations.gankDescError;
               },
             ),
             TextFormField(
               controller: _nicknameController,
               decoration: InputDecoration(
-                labelText: "你的昵称",
+                labelText: localizations.gankWho,
                 icon: Icon(Icons.person),
               ),
               validator: (value) {
-                return value.length > 0 ? null : "请输入你的昵称";
+                return value.length > 0 ? null : localizations.gankWhoError;
               },
             ),
             InputDecorator(
               decoration: InputDecoration(
-                labelText: "分类",
+                labelText: localizations.categoryTitle,
                 icon: Icon(Icons.category),
                 border: InputBorder.none,
               ),
@@ -130,7 +131,7 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      isSubmitting ? "正在提交..." : "提交",
+                      isSubmitting ? localizations.submitting : localizations.submit,
                       style: TextStyle(color: Theme.of(context).primaryTextTheme.title.color),
                     ),
                   ],
@@ -153,9 +154,9 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
       isSubmitting = true;
     });
     API().submitGank(url, desc, who, _type).then((result) {
-      showSubmitResult("提交成功");
+      showSubmitResult(GankLocalizations.of(context).submitSuccess);
     }).catchError((error) {
-      showSubmitResult(error?.message ?? "提交失败");
+      showSubmitResult(error?.message ?? GankLocalizations.of(context).submitFailed);
     });
   }
 
@@ -171,7 +172,10 @@ class _SubmitGankPageState extends State<SubmitGankPage> {
           children: <Widget>[
             Center(child: Text(msg, style: TextStyle(fontSize: 16))),
             FlatButton(
-              child: Text("确定", style: TextStyle(color: Theme.of(context).primaryColor)),
+              child: Text(
+                GankLocalizations.of(context).confirm,
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ],

@@ -15,10 +15,10 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_model.dart';
 
 class SettingPage extends StatefulWidget {
-  final String title = "设置";
 
   @override
   State<StatefulWidget> createState() {
@@ -29,42 +29,76 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
+  GankLocalizations localizations = GankLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(localizations.settingsTitle),
         centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.palette, color: Theme.of(context).primaryColor),
-            title: Text("修改主题"),
+            leading: Icon(Icons.language, color: Theme.of(context).primaryColor),
+            title: Text(localizations.language),
+            trailing: Icon(Icons.arrow_drop_down),
+            onTap: () => showLanguageDialog(),
           ),
-          Container(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 6,
-              children: Store.value<SettingModel>(context).themeMap.values.map((themeData) {
-                return GestureDetector(
-                  onTap: () => Store.value<SettingModel>(context).$setTheme(themeData),
-                  child: createColorBlock(themeData.primaryColor),
-                );
-              }).toList(),
-            ),
+          ListTile(
+            leading: Icon(Icons.palette, color: Theme.of(context).primaryColor),
+            title: Text(localizations.theme),
+            trailing: Icon(Icons.arrow_drop_down),
+            onTap: () => showThemeDialog(),
           ),
         ],
       ),
     );
   }
 
-  Widget createColorBlock(Color color) {
-    return Container(
-      width: 14,
-      height: 14,
-      color: color,
-      margin: EdgeInsets.all(5),
+  showThemeDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          contentPadding: EdgeInsets.all(10),
+          children: <Widget>[
+            GridView.count(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              crossAxisCount: 4,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              children: Settings.themeMap.values.map((themeData) {
+                return GestureDetector(
+                  child: Container(color: themeData.primaryColor),
+                  onTap: () {
+                    Store.value<SettingModel>(context).setTheme(context, themeData);
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  showLanguageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          children: Settings.localeMap.keys.map((key) {
+            return ListTile(
+              title: Text(key),
+              onTap: () {
+                Store.value<SettingModel>(context).setLocale(context, Settings.localeMap[key]);
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }

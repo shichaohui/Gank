@@ -16,15 +16,17 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:provide/provide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-ThemeData _createThemeData(Color primaryColor) {
-  return ThemeData(primarySwatch: primaryColor);
-}
+class Settings {
 
-class SettingInfo {
-  final Map<String, ThemeData> themeMap = {
+  static ThemeData _createThemeData(Color primaryColor) {
+    return ThemeData(primarySwatch: primaryColor);
+  }
+
+  static final Map<String, ThemeData> themeMap = {
     "blue": _createThemeData(Colors.blue),
     "indigo": _createThemeData(Colors.indigo),
     "cyan": _createThemeData(Colors.cyan),
@@ -39,25 +41,39 @@ class SettingInfo {
     "teal": _createThemeData(Colors.teal),
   };
 
-  ThemeData theme = _createThemeData(Colors.red);
+  static final Map<String, Locale> localeMap = {
+    "中文简体": Locale("zh", "CN"),
+    "English (US)": Locale("en", "US"),
+  };
+
+  ThemeData theme;
+  Locale locale;
 }
 
-class SettingModel extends SettingInfo with ChangeNotifier {
-  final String keyTheme = "Theme";
+class SettingModel extends Settings with ChangeNotifier {
+  final String _keyTheme = "Theme";
+  final String _keyLocale = "Locale";
 
   SettingModel() {
-    _initPrimaryColor();
+    _init();
   }
 
-  Future $setTheme(ThemeData themeData) async {
-    if (!themeMap.containsValue(themeData)) {
-      throw Exception("传入的 ThemeData 不在预置列表中");
+  void _init() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    theme = Settings.themeMap[preferences.get(_keyTheme) ?? Settings.themeMap.keys.first];
+    locale = Settings.localeMap[preferences.get(_keyLocale) ?? Settings.localeMap.keys.first];
+    notifyListeners();
+  }
+
+  Future setTheme(BuildContext context, ThemeData themeData) async {
+    if (!Settings.themeMap.containsValue(themeData)) {
+      throw Exception(GankLocalizations.of(context).themeError);
     }
     this.theme = themeData;
 
-    for (String themeName in themeMap.keys) {
-      if (themeMap[themeName] == themeData) {
-        (await SharedPreferences.getInstance()).setString(keyTheme, themeName);
+    for (String themeName in Settings.themeMap.keys) {
+      if (Settings.themeMap[themeName] == themeData) {
+        (await SharedPreferences.getInstance()).setString(_keyTheme, themeName);
         break;
       }
     }
@@ -65,9 +81,19 @@ class SettingModel extends SettingInfo with ChangeNotifier {
     notifyListeners();
   }
 
-  void _initPrimaryColor() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    theme = themeMap[preferences.get(keyTheme) ?? themeMap.keys.first];
+  Future setLocale(BuildContext context, Locale locale) async {
+    if (!Settings.localeMap.containsValue(locale)) {
+      throw Exception(GankLocalizations.of(context).localeError);
+    }
+    this.locale = locale;
+
+    for (String localeName in Settings.localeMap.keys) {
+      if (Settings.localeMap[localeName] == locale) {
+        (await SharedPreferences.getInstance()).setString(_keyLocale, localeName);
+        break;
+      }
+    }
+
     notifyListeners();
   }
 }

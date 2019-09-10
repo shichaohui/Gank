@@ -1,0 +1,159 @@
+{
+  "@@last_modified": "2019-09-10T11:30:09.057563",
+  "appTitle": "Gank",
+  "@appTitle": {
+    "description": "Title for current application",
+    "type": "text",
+    "placeholders": {}
+  },
+  "latestTitle": "Latest",
+  "@latestTitle": {
+    "description": "Title for latest ganks page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categoryTitle": "Category",
+  "@categoryTitle": {
+    "description": "Title for category ganks page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "historyTitle": "History",
+  "@historyTitle": {
+    "description": "Title for history ganks page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "welfareTitle": "Welfare",
+  "@welfareTitle": {
+    "description": "Title for welfare ganks page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitGankTitle": "Submit Gank",
+  "@submitGankTitle": {
+    "description": "Title for submit ganks page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsTitle": "Settings",
+  "@settingsTitle": {
+    "description": "Title for settings page",
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadError": "Error，click me to try again",
+  "@loadError": {
+    "description": "load data error for list",
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadingMore": "Loading more ...",
+  "@loadingMore": {
+    "description": "loading more data for list",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noMore": "No more",
+  "@noMore": {
+    "description": "No more data for list",
+    "type": "text",
+    "placeholders": {}
+  },
+  "empty": "Empty",
+  "@empty": {
+    "description": "No data",
+    "type": "text",
+    "placeholders": {}
+  },
+  "themeError": "The passing ThemeData is not in the preset list",
+  "@themeError": {
+    "description": "The passing ThemeData for setTheme() is not in the preset list",
+    "type": "text",
+    "placeholders": {}
+  },
+  "localeError": "The passing Locale is not in the preset list",
+  "@localeError": {
+    "description": "The passing Locals for setLocale() is not in the preset list",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language selector title in list tile",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Theme selector title in list tile",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankUrl": "Gank url",
+  "@gankUrl": {
+    "description": "The gank url",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankUrlError": "Please input correct url",
+  "@gankUrlError": {
+    "description": "The inputting gank url is error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankDesc": "Gank desc",
+  "@gankDesc": {
+    "description": "The gank description",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankDescError": "Please input description",
+  "@gankDescError": {
+    "description": "The inputting gank description is error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankWho": "Nickname",
+  "@gankWho": {
+    "description": "The nickname of the submitter",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankWhoError": "Please input your nickname",
+  "@gankWhoError": {
+    "description": "The inputting nickname is error",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submit": "Submit",
+  "@submit": {
+    "description": "Submit",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitting": "Submitting",
+  "@submitting": {
+    "description": "Submitting gank",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitFailed": "Submit failed",
+  "@submitFailed": {
+    "description": "Submit gank failed",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitSuccess": "Submit success",
+  "@submitSuccess": {
+    "description": "Submit gank success",
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm",
+    "type": "text",
+    "placeholders": {}
+  }
+}

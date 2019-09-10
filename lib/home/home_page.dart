@@ -16,8 +16,10 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gank/gank_widget/daily_body.dart';
 import 'package:gank/home/drawer.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_model.dart';
 
 void main() => runApp(Store.init(child: MyApp()));
@@ -26,10 +28,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Store.connect<SettingModel>(
-      builder: (context, child, model) {
+      builder: (context, child, settingModel) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: model.theme,
+          onGenerateTitle: (context) => GankLocalizations.of(context).appTitle,
+          theme: settingModel.theme,
+          locale: settingModel.locale,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GankLocalizationsDelegate.delegate
+          ],
+          supportedLocales: Settings.localeMap.values.toList(),
           home: _HomePage(),
         );
       },
@@ -38,8 +48,6 @@ class MyApp extends StatelessWidget {
 }
 
 class _HomePage extends StatefulWidget {
-  final String title = "最新";
-
   _HomePage({Key key}) : super(key: key);
 
   @override
@@ -51,7 +59,7 @@ class _HomePageState extends State<_HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(GankLocalizations.of(context).latestTitle),
         centerTitle: true,
         elevation: 0,
       ),

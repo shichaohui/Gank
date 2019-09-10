@@ -1,0 +1,159 @@
+{
+  "@@last_modified": "2019-09-10T11:13:40.765184",
+  "appTitle": "干货",
+  "@appTitle": {
+    "description": "当前应用程序的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "latestTitle": "最新",
+  "@latestTitle": {
+    "description": "最新干货页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "categoryTitle": "分类",
+  "@categoryTitle": {
+    "description": "分类干货页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "historyTitle": "历史",
+  "@historyTitle": {
+    "description": "历史干货页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "welfareTitle": "福利",
+  "@welfareTitle": {
+    "description": "福利页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitGankTitle": "提交",
+  "@submitGankTitle": {
+    "description": "提交干货页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "settingsTitle": "设置",
+  "@settingsTitle": {
+    "description": "设置页面的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadError": "加载失败，点我重试",
+  "@loadError": {
+    "description": "加载数据失败可点击重试的提示",
+    "type": "text",
+    "placeholders": {}
+  },
+  "loadingMore": "正在加载...",
+  "@loadingMore": {
+    "description": "正在加载更多列表数据",
+    "type": "text",
+    "placeholders": {}
+  },
+  "noMore": "没有更多数据了",
+  "@noMore": {
+    "description": "列表没有更多的数据可被加载了",
+    "type": "text",
+    "placeholders": {}
+  },
+  "empty": "空数据",
+  "@empty": {
+    "description": "没有数据",
+    "type": "text",
+    "placeholders": {}
+  },
+  "themeError": "传入的 ThemeData 不在预置列表中",
+  "@themeError": {
+    "description": "传入的 ThemeData 不在预置列表中",
+    "type": "text",
+    "placeholders": {}
+  },
+  "localeError": "传入的 Local 不在预置列表中",
+  "@localeError": {
+    "description": "传入的 Local 不在预置列表中",
+    "type": "text",
+    "placeholders": {}
+  },
+  "language": "语言",
+  "@language": {
+    "description": "语言选择器的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "theme": "主题",
+  "@theme": {
+    "description": "主题选择器的标题",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankUrl": "干货地址",
+  "@gankUrl": {
+    "description": "待发布的干货地址",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankUrlError": "请输入正确的网址",
+  "@gankUrlError": {
+    "description": "干货地址输入错误的提示",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankDesc": "干货描述",
+  "@gankDesc": {
+    "description": "待发布的干货的描述信息",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankDescError": "请输入正确的描述信息",
+  "@gankDescError": {
+    "description": "干货描述输入错误的提示",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankWho": "你的昵称",
+  "@gankWho": {
+    "description": "干货发布者的昵称",
+    "type": "text",
+    "placeholders": {}
+  },
+  "gankWhoError": "请输入你的昵称",
+  "@gankWhoError": {
+    "description": "干货发布者的昵称输入错误的提示",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submit": "提交",
+  "@submit": {
+    "description": "提交",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitting": "正在提交...",
+  "@submitting": {
+    "description": "",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitFailed": "提交失败",
+  "@submitFailed": {
+    "description": "提交干货失败",
+    "type": "text",
+    "placeholders": {}
+  },
+  "submitSuccess": "提交成功",
+  "@submitSuccess": {
+    "description": "提交干货成功",
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm": "确认",
+  "@confirm": {
+    "description": "确认",
+    "type": "text",
+    "placeholders": {}
+  }
+}

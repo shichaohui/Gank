@@ -18,10 +18,10 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/gank_widget/gank_card.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/widget/super_flow_view.dart';
 
 class CategoryPage extends StatefulWidget {
-  final String title = "分类";
   final List<String> typeList = [
     "Android",
     "App",
@@ -44,7 +44,7 @@ class _CategoryPageState extends State<CategoryPage> {
       length: widget.typeList.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(GankLocalizations.of(context).categoryTitle),
           centerTitle: true,
           bottom: TabBar(
             isScrollable: true,

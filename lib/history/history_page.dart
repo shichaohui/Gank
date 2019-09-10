@@ -19,10 +19,10 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/history/daily_page.dart';
+import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/widget/super_flow_view.dart';
 
 class HistoryPage extends StatefulWidget {
-  final String title = "干货历史";
 
   @override
   State<StatefulWidget> createState() {
@@ -35,7 +35,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(GankLocalizations.of(context).historyTitle),
         centerTitle: true,
       ),
       body: SuperFlowView<History>(
