@@ -56,10 +56,12 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
+  // 显示主题选择对话框
   _showThemeDialog() {
     showDialog(
       context: context,
       builder: (context) {
+        SettingModel settingModel = Store.value<SettingModel>(context);
         return SimpleDialog(
           contentPadding: EdgeInsets.all(10),
           children: <Widget>[
@@ -69,12 +71,19 @@ class _SettingPageState extends State<SettingPage> {
               crossAxisCount: 4,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
-              children: Settings.themeMap.values.map((themeData) {
+              // 根据预定义主题列表生成小部件
+              children: Settings.themeList.map((gankTheme) {
                 return GestureDetector(
-                  child: Container(color: themeData.primaryColor),
+                  child: Container(
+                    color: gankTheme.themeData.primaryColor,
+                    child: Icon(
+                      Icons.check,
+                      color: gankTheme == settingModel.theme ? Colors.white : Colors.transparent,
+                    ),
+                  ),
                   onTap: () {
                     // 更新主题
-                    Store.value<SettingModel>(context).setTheme(context, themeData);
+                    settingModel.setTheme(context, gankTheme);
                     Navigator.pop(context);
                   },
                 );
@@ -90,30 +99,29 @@ class _SettingPageState extends State<SettingPage> {
     showDialog(
       context: context,
       builder: (context) {
+        SettingModel settingModel = Store.value<SettingModel>(context);
         return SimpleDialog(
-          children: Settings.localeMap.keys.map((key) {
-            // 预定义语言列表
+          // 根据预定义语言列表生成小部件
+          children: Settings.languageList.map((language) {
+            bool isUsing = language == settingModel.language;
             return ListTile(
-              title: Text(key),
+              title: Text(
+                language == Language.followSystem
+                    ? GankLocalizations.of(context).followSystem
+                    : language.tag,
+                style: isUsing ? TextStyle(color: Theme.of(context).primaryColor) : null,
+              ),
+              trailing: Icon(
+                Icons.check,
+                color: isUsing ? Theme.of(context).primaryColor : Colors.transparent,
+              ),
               onTap: () {
                 // 更新语言
-                Store.value<SettingModel>(context).setLocale(context, Settings.localeMap[key]);
+                settingModel.setLocale(context, language);
                 Navigator.pop(context);
               },
             );
-          }).toList()
-            // 将跟随系统添加到第一个位置
-            ..insert(
-              0,
-              ListTile(
-                title: Text(GankLocalizations.of(context).followSystem),
-                onTap: () {
-                  // 更新语言
-                  Store.value<SettingModel>(context).setLocale(context, null);
-                  Navigator.pop(context);
-                },
-              ),
-            ),
+          }).toList(),
         );
       },
     );

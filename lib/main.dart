@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           onGenerateTitle: (context) => GankLocalizations.of(context).appTitle,
           // 指定主题
-          theme: settingModel.theme,
+          theme: settingModel.theme.themeData,
           // 指定语言
-          locale: settingModel.locale,
+          locale: settingModel.language.locale,
           // 指定语言处理程序
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             GankLocalizationsDelegate.delegate
           ],
           // 指定支持的语言
-          supportedLocales: Settings.localeMap.values.toList(),
+          supportedLocales: Settings.getSupportLocales(),
           // 首页
           home: HomePage(),
         );

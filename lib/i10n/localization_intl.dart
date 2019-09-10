@@ -225,7 +225,7 @@ class GankLocalizations {
     );
   }
 
-  String get releaseSuccess{
+  String get releaseSuccess {
     return Intl.message(
       'Release success',
       name: 'releaseSuccess',
@@ -233,7 +233,7 @@ class GankLocalizations {
     );
   }
 
-  String get confirm{
+  String get confirm {
     return Intl.message(
       'Confirm',
       name: 'confirm',
@@ -241,14 +241,13 @@ class GankLocalizations {
     );
   }
 
-  String get followSystem{
+  String get followSystem {
     return Intl.message(
       'Follow System',
       name: 'followSystem',
       desc: 'follow system',
     );
   }
-
 }
 
 class GankLocalizationsDelegate extends LocalizationsDelegate<GankLocalizations> {
@@ -257,7 +256,9 @@ class GankLocalizationsDelegate extends LocalizationsDelegate<GankLocalizations>
   GankLocalizationsDelegate._();
 
   @override
-  bool isSupported(Locale locale) => Settings.localeMap.containsValue(locale);
+  bool isSupported(Locale locale) {
+    return Settings.getSupportLocales().contains(locale);
+  }
 
   @override
   Future<GankLocalizations> load(Locale locale) {

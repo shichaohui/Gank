@@ -20,6 +20,26 @@ import 'package:gank/i10n/localization_intl.dart';
 import 'package:provide/provide.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// 主题
+class GankTheme {
+  final String tag;
+  final ThemeData themeData;
+
+  /// 通过 [tag] 和 [themeData] 创建主题实例
+  GankTheme(this.tag, this.themeData);
+}
+
+/// 语言
+class Language {
+  static final Language followSystem = Language("LanguageFollowSystem", null);
+
+  final String tag;
+  final Locale locale;
+
+  /// 通过 [tag] 和 [locale] 创建语言实例
+  Language(this.tag, this.locale);
+}
+
 /// 设置
 class Settings {
   /// 通过 [primaryColor] 创建主题
@@ -28,38 +48,43 @@ class Settings {
   }
 
   /// 预定义主题
-  static final Map<String, ThemeData> themeMap = {
-    "blue": _createThemeData(Colors.blue),
-    "indigo": _createThemeData(Colors.indigo),
-    "cyan": _createThemeData(Colors.cyan),
-    "yellow": _createThemeData(Colors.yellow),
-    "lime": _createThemeData(Colors.lime),
-    "amber": _createThemeData(Colors.amber),
-    "orange": _createThemeData(Colors.orange),
-    "red": _createThemeData(Colors.red),
-    "pink": _createThemeData(Colors.pink),
-    "purple": _createThemeData(Colors.purple),
-    "green": _createThemeData(Colors.green),
-    "teal": _createThemeData(Colors.teal),
-  };
+  static final List<GankTheme> themeList = [
+    GankTheme("blue", _createThemeData(Colors.blue)),
+    GankTheme("indigo", _createThemeData(Colors.indigo)),
+    GankTheme("cyan", _createThemeData(Colors.cyan)),
+    GankTheme("yellow", _createThemeData(Colors.yellow)),
+    GankTheme("lime", _createThemeData(Colors.lime)),
+    GankTheme("amber", _createThemeData(Colors.amber)),
+    GankTheme("orange", _createThemeData(Colors.orange)),
+    GankTheme("red", _createThemeData(Colors.red)),
+    GankTheme("pink", _createThemeData(Colors.pink)),
+    GankTheme("purple", _createThemeData(Colors.purple)),
+    GankTheme("green", _createThemeData(Colors.green)),
+    GankTheme("teal", _createThemeData(Colors.teal)),
+  ];
 
   /// 预定义语言
-  static final Map<String, Locale> localeMap = {
-    "中文简体": Locale("zh", "CN"),
-    "English (US)": Locale("en", "US"),
-  };
+  static final List<Language> languageList = [
+    Language.followSystem,
+    Language("中文简体", Locale("zh", "CN")),
+    Language("English (US)", Locale("en", "US")),
+  ];
+
+  /// 获取支持的语言
+  static List<Locale> getSupportLocales() {
+    return languageList.map((language) => language.locale).toList()..remove(null);
+  }
 
   /// 当前使用的主题
-  ThemeData theme;
+  GankTheme theme = themeList.first;
 
-  /// 当前使用的语言，null 表示跟随系统
-  Locale locale;
+  /// 当前使用的语言
+  Language language = languageList.first;
 }
 
 class SettingModel extends Settings with ChangeNotifier {
   final String _keyTheme = "Theme";
-  final String _keyLocale = "Locale";
-  final String _localeFollowSystem = "LocaleFollowSystem";
+  final String _keyLanguage = "Language";
 
   SettingModel() {
     _init();
@@ -67,57 +92,40 @@ class SettingModel extends Settings with ChangeNotifier {
 
   void _init() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    theme = Settings.themeMap[preferences.get(_keyTheme) ?? Settings.themeMap.keys.first];
-    locale = Settings.localeMap[preferences.get(_keyLocale) ?? _localeFollowSystem];
+    theme = Settings.themeList.firstWhere(
+      (item) => item.tag == preferences.get(_keyTheme),
+      orElse: () => Settings.themeList.first,
+    );
+    language = Settings.languageList.firstWhere(
+      (item) => item.tag == preferences.get(_keyLanguage),
+      orElse: () => Settings.languageList.first,
+    );
     notifyListeners();
   }
 
-  /// 切换当前主题为 [themeData]
-  Future setTheme(BuildContext context, ThemeData themeData) async {
-    if (!Settings.themeMap.containsValue(themeData)) {
+  /// 切换当前主题为 [theme]
+  Future setTheme(BuildContext context, GankTheme theme) async {
+    if (!Settings.themeList.contains(theme)) {
       throw Exception(GankLocalizations.of(context).themeError);
     }
-    this.theme = themeData;
-
-    for (String themeName in Settings.themeMap.keys) {
-      if (Settings.themeMap[themeName] == themeData) {
-        (await SharedPreferences.getInstance()).setString(_keyTheme, themeName);
-        break;
-      }
-    }
-
+    this.theme = theme;
+    (await SharedPreferences.getInstance()).setString(_keyTheme, theme.tag);
     notifyListeners();
   }
 
   /// 切换语言为跟随系统设置
   Future setLocaleFollowSystem(BuildContext context) async {
-    setLocale(context, null);
+    setLocale(context, Language.followSystem);
   }
 
-  /// 切换当前语言为 [locale]，[locale] 为 null 表示跟随系统设置
-  Future setLocale(BuildContext context, Locale locale) async {
-    if (locale != null && !Settings.localeMap.containsValue(locale)) {
+  /// 切换当前语言为 [language]
+  Future setLocale(BuildContext context, Language language) async {
+    if (!Settings.languageList.contains(language)) {
       throw Exception(GankLocalizations.of(context).localeError);
     }
-    this.locale = locale;
-
-    String localeTag = _localeFollowSystem;
-    if (locale != null) {
-      localeTag = findKey<String>(Settings.localeMap, locale);
-    }
-    (await SharedPreferences.getInstance()).setString(_keyLocale, localeTag);
-
+    this.language = language;
+    (await SharedPreferences.getInstance()).setString(_keyLanguage, language.tag);
     notifyListeners();
-  }
-
-  /// 查找 [value] 对应的 key
-  T findKey<T>(Map<T, dynamic> map, dynamic value) {
-    for (T key in map.keys) {
-      if (map[key] == value) {
-        return key;
-      }
-    }
-    return null;
   }
 }
 
