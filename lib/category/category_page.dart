@@ -21,6 +21,7 @@ import 'package:gank/gank_widget/gank_card.dart';
 import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/widget/super_flow_view.dart';
 
+/// 分类查看干货的页面
 class CategoryPage extends StatefulWidget {
   final List<String> typeList = [
     "Android",
@@ -63,9 +64,11 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 }
 
+/// 干货列表
 class _GankList extends StatefulWidget {
   final String type;
 
+  /// 根据 [type] 加载干货列表
   _GankList(this.type);
 
   @override

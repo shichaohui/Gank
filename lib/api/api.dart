@@ -22,6 +22,7 @@ import 'package:gank/entity/entity.dart';
 
 typedef T _ResultHandler<T>(Map<String, dynamic> json);
 
+/// 服务器接口
 class API {
   static API _instance;
 
@@ -38,6 +39,7 @@ class API {
     return _instance;
   }
 
+  /// 使用 [handler] 处理服务器响应 [response] 中的 result 自动，并统一处理 error。
   Future<List<T>> _handleResponse<T>(Response response, _ResultHandler<T> handler) {
     Map<String, dynamic> map = json.decode(response.data);
     if (map["error"]) {

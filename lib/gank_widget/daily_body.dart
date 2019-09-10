@@ -21,11 +21,14 @@ import 'package:gank/i10n/localization_intl.dart';
 
 import 'gank_card.dart';
 
+/// 显示指定日期干货数据的页面主体小部件
 class DailyBody extends StatefulWidget {
   final String date;
 
+  /// 生成指定日期 [date] 的小部件
   DailyBody.byDate(this.date) : assert(date != null && date != "");
 
+  /// 生成最近发布数据的小部件
   DailyBody.byLatest() : date = "";
 
   @override
@@ -61,20 +64,22 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
           // 加载成功
           bodyWidget = _createBody(snapshot.data.categories, snapshot.data.result);
         }
-        // 构建最终显示的 Widget 树
         return bodyWidget;
       },
     );
   }
 
+  /// 加载数据
   _loadData() {
     _future = widget.date == "" ? API().getLatest() : API().getDaily(widget.date);
   }
 
+  ///  创建正在加载数据的小部件
   Widget _createLoadingBody() {
     return Center(child: CircularProgressIndicator());
   }
 
+  /// 创建加载数据错误的小部件
   Widget _createErrorBody(context) {
     return Center(
       child: FlatButton(
@@ -82,11 +87,13 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
           GankLocalizations.of(context).loadError,
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
+        // 点击重新加载数据
         onPressed: () => setState(() => _loadData()),
       ),
     );
   }
 
+  /// 创建页面主体，显示数据 [categories] 和 [data]。
   Widget _createBody(List<String> categories, Map<String, List<Gank>> data) {
     _filterAndSortCategories(categories);
 
@@ -121,6 +128,7 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
     );
   }
 
+  /// 对 [categories] 进行过滤和排序
   _filterAndSortCategories(List<String> categories) {
     categories.remove("福利");
     categories.remove("休息视频");
@@ -128,9 +136,11 @@ class _DailyBodyState extends State<DailyBody> with TickerProviderStateMixin {
   }
 }
 
+/// 一个数据列表
 class _GankList extends StatefulWidget {
   final List<Gank> gankList;
 
+  /// 生成显示 [gankList] 数据的列表小部件
   _GankList(this.gankList);
 
   @override

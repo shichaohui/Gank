@@ -17,10 +17,12 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+/// WebView 页面
 class WebViewPage extends StatefulWidget {
   final url;
   final title;
 
+  /// 创建 WebView 页面，显示指定 [url] 的内容
   WebViewPage({Key key, @required this.url, this.title = ""}) : super(key: key);
 
   @override
@@ -52,11 +54,12 @@ class _WebViewPageState extends State<WebViewPage> {
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: WillPopScope(child: Stack(children: children), onWillPop: goBack),
+      body: WillPopScope(child: Stack(children: children), onWillPop: _goBack),
     );
   }
 
-  Future<bool> goBack() async {
+  /// 处理返回事件
+  Future<bool> _goBack() async {
     if (_controller == null) {
       return true;
     }

@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_model.dart';
 
+/// APP 设置页面
 class SettingPage extends StatefulWidget {
 
   @override
@@ -37,24 +38,26 @@ class _SettingPageState extends State<SettingPage> {
       ),
       body: ListView(
         children: <Widget>[
+          // 语言
           ListTile(
             leading: Icon(Icons.language, color: Theme.of(context).primaryColor),
             title: Text(localizations.language),
             trailing: Icon(Icons.arrow_drop_down),
-            onTap: () => showLanguageDialog(),
+            onTap: () => _showLanguageDialog(),
           ),
+          // 主题
           ListTile(
             leading: Icon(Icons.palette, color: Theme.of(context).primaryColor),
             title: Text(localizations.theme),
             trailing: Icon(Icons.arrow_drop_down),
-            onTap: () => showThemeDialog(),
+            onTap: () => _showThemeDialog(),
           ),
         ],
       ),
     );
   }
 
-  showThemeDialog() {
+  _showThemeDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -71,6 +74,7 @@ class _SettingPageState extends State<SettingPage> {
                 return GestureDetector(
                   child: Container(color: themeData.primaryColor),
                   onTap: () {
+                    // 更新主题
                     Store.value<SettingModel>(context).setTheme(context, themeData);
                     Navigator.pop(context);
                   },
@@ -83,7 +87,7 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  showLanguageDialog() {
+  _showLanguageDialog() {
     showDialog(
       context: context,
       builder: (context) {
@@ -92,6 +96,7 @@ class _SettingPageState extends State<SettingPage> {
             return ListTile(
               title: Text(key),
               onTap: () {
+                // 更新语言
                 Store.value<SettingModel>(context).setLocale(context, Settings.localeMap[key]);
                 Navigator.pop(context);
               },

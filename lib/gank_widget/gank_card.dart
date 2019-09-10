@@ -19,9 +19,11 @@ import 'package:flutter/material.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/webview/webview_page.dart';
 
+/// 一条干货数据的卡片小部件
 class GankCard extends StatelessWidget {
   final Gank gank;
 
+  /// 生成 [gank] 的卡片小部件
   GankCard(this.gank);
 
   @override

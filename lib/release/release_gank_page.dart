@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/i10n/localization_intl.dart';
 
+/// 发布干货的页面
 class ReleaseGankPage extends StatefulWidget {
   final List<String> typeList = [
     "Android",
@@ -37,10 +38,15 @@ class ReleaseGankPage extends StatefulWidget {
 }
 
 class _ReleaseGankPageState extends State<ReleaseGankPage> {
+  // 表单的 key，用来获取表单的引用、状态等信息
   GlobalKey _formKey = new GlobalKey<FormState>();
+
+  // 编辑框控制器，用来监听编辑框的状态、获取输入内容等
   TextEditingController _urlController = TextEditingController();
   TextEditingController _descController = TextEditingController();
   TextEditingController _nicknameController = TextEditingController();
+
+  // 待发布内容的类型
   String _type;
 
   bool isReleasing = false;
@@ -65,6 +71,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
         child: ListView(
           padding: EdgeInsets.only(left: 16, right: 16),
           children: <Widget>[
+            // 干货地址
             TextFormField(
               autofocus: true,
               controller: _urlController,
@@ -78,6 +85,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
                     : localizations.gankUrlError;
               },
             ),
+            // 干货描述
             TextFormField(
               controller: _descController,
               decoration: InputDecoration(
@@ -88,6 +96,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
                 return value.length > 0 ? null : localizations.gankDescError;
               },
             ),
+            // 发布人的昵称
             TextFormField(
               controller: _nicknameController,
               decoration: InputDecoration(
@@ -98,6 +107,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
                 return value.length > 0 ? null : localizations.gankWhoError;
               },
             ),
+            // 分类
             InputDecorator(
               decoration: InputDecoration(
                 labelText: localizations.categoryTitle,
@@ -112,6 +122,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
                 onChanged: (value) => setState(() => _type = value),
               ),
             ),
+            // 发布按钮
             IgnorePointer(
               ignoring: isReleasing,
               child: RaisedButton(
@@ -137,8 +148,9 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
                   ],
                 ),
                 onPressed: () {
+                  // 表单验证成功，执行发布
                   if ((_formKey.currentState as FormState).validate()) {
-                    release(_urlController.text, _descController.text, _nicknameController.text);
+                    _release(_urlController.text, _descController.text, _nicknameController.text);
                   }
                 },
               ),
@@ -149,18 +161,20 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
     );
   }
 
-  release(String url, String desc, String who) {
+  /// 发布 网址[url]、描述信息[desc]、发布人昵称[who] 组成的干货内容
+  _release(String url, String desc, String who) {
     setState(() {
       isReleasing = true;
     });
     API().releaseGank(url, desc, who, _type).then((result) {
-      showReleaseResult(GankLocalizations.of(context).releaseSuccess);
+      _showReleaseResult(GankLocalizations.of(context).releaseSuccess);
     }).catchError((error) {
-      showReleaseResult(error?.message ?? GankLocalizations.of(context).releaseFailed);
+      _showReleaseResult(error?.message ?? GankLocalizations.of(context).releaseFailed);
     });
   }
 
-  showReleaseResult(String msg) {
+  /// 显示发布结果 [msg]
+  _showReleaseResult(String msg) {
     setState(() {
       isReleasing = false;
     });

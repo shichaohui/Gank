@@ -16,12 +16,14 @@
 
 import 'package:flutter/material.dart';
 
+/// 可收缩缩放的盒子小部件
 class GestureZoomBox extends StatefulWidget {
   final double maxScale;
   final double doubleTapScale;
   final Widget child;
   final VoidCallback onPressed;
 
+  /// 通过最大缩放比例 [maxScale]、双击缩放比例 [doubleTapScale]、子部件 [child]、点击事件 [onPressed] 创建小部件
   const GestureZoomBox({
     Key key,
     this.maxScale = 5.0,
@@ -39,14 +41,20 @@ class GestureZoomBox extends StatefulWidget {
 }
 
 class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStateMixin {
+  // 缩放动画控制器
   AnimationController _scaleAnimController;
+  // 偏移动画控制器
   AnimationController _offsetAnimController;
 
+  // 上次缩放变化数据
   ScaleUpdateDetails _latestScaleUpdateDetails;
 
+  // 当前缩放值
   double _scale = 1.0;
+  // 当前偏移值
   Offset _offset = Offset.zero;
 
+  // 双击缩放的点击位置
   Offset _doubleTapPosition;
 
   @override
@@ -81,10 +89,12 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     super.dispose();
   }
 
+  /// 处理手指抬起事件 [event]
   _onPointerUp(PointerUpEvent event) {
     _doubleTapPosition = event.localPosition;
   }
 
+  /// 处理双击
   _onDoubleTap() {
     double targetScale = _scale == 1.0 ? widget.doubleTapScale : 1.0;
     _animationScale(targetScale);
@@ -93,6 +103,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     }
   }
 
+  /// 处理缩放变化 [details]
   _onScaleUpdate(ScaleUpdateDetails details) {
     setState(() {
       if (details.scale != 1.0) {
@@ -103,6 +114,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     });
   }
 
+  /// 执行缩放
   _scaling(ScaleUpdateDetails details) {
     if (_latestScaleUpdateDetails == null) {
       _latestScaleUpdateDetails = details;
@@ -134,6 +146,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     _latestScaleUpdateDetails = details;
   }
 
+  /// 执行拖动
   _dragging(ScaleUpdateDetails details) {
     if (_latestScaleUpdateDetails != null) {
       _offset += Offset(
@@ -144,15 +157,19 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     _latestScaleUpdateDetails = details;
   }
 
+  /// 缩放/拖动结束
   _onScaleEnd(ScaleEndDetails details) {
     _latestScaleUpdateDetails = null;
 
     if (_scale < 1.0) {
+      // 缩放值过小，回复到 1.0
       _animationScale(1.0);
     }
     if (_scale <= 1.0) {
+      // 缩放值过小，修改偏移值，使内容居中
       _animationOffset(Offset.zero);
     } else {
+      // 处理拖动超过边界的情况（自动回弹到边界）
       double targetOffsetX = _offset.dx, targetOffsetY = _offset.dy;
 
       double scaleOffsetX = context.size.width * (_scale - 1.0) / 2;
@@ -179,6 +196,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     }
   }
 
+  /// 执行动画缩放内容到 [targetScale]
   _animationScale(double targetScale) {
     _scaleAnimController?.dispose();
     _scaleAnimController = AnimationController(vsync: this, duration: Duration(milliseconds: 100));
@@ -202,6 +220,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     _scaleAnimController.forward();
   }
 
+  /// 执行动画偏移内容到 [targetOffset]
   _animationOffset(Offset targetOffset) {
     _offsetAnimController?.dispose();
     _offsetAnimController = AnimationController(vsync: this, duration: Duration(milliseconds: 100));

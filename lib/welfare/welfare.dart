@@ -39,17 +39,20 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
         type: FlowType.STAGGERED_GRID,
         physics: BouncingScrollPhysics(),
         pageRequest: (page, pageSize) async {
+          // 请求数据
           return await API().getWelfare(page, pageSize);
         },
         crossAxisCount: 2,
         itemBuilder: (context, index, welfare) {
           return GestureDetector(
             onTap: () {
+              // 显示大图
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => _createBigImagePage(welfare.url)),
               );
             },
+            // 图片卡片
             child: Card(
               elevation: 5,
               margin: const EdgeInsets.all(5),

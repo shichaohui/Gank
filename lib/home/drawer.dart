@@ -40,20 +40,20 @@ class HomeDrawer extends StatelessWidget {
               ),
             ),
           ),
-          createListTile(context, localizations.historyTitle, Icons.history, () {
+          _createListTile(context, localizations.historyTitle, Icons.history, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryPage()));
           }),
-          createListTile(context, localizations.categoryTitle, Icons.category, () {
+          _createListTile(context, localizations.categoryTitle, Icons.category, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage()));
           }),
-          createListTile(context, localizations.welfareTitle, Icons.image, () {
+          _createListTile(context, localizations.welfareTitle, Icons.image, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => WelfarePage()));
           }),
-          createListTile(context, localizations.releaseGankTitle, Icons.cloud_upload, () {
+          _createListTile(context, localizations.releaseGankTitle, Icons.cloud_upload, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ReleaseGankPage()));
           }),
           Divider(),
-          createListTile(context, localizations.settingsTitle, Icons.settings, () {
+          _createListTile(context, localizations.settingsTitle, Icons.settings, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => SettingPage()));
           }),
         ],
@@ -61,7 +61,8 @@ class HomeDrawer extends StatelessWidget {
     );
   }
 
-  ListTile createListTile(
+  /// 通过标题[title]、图标[icon]、点击事件 [onTap] 创建列表的 Item 小部件
+  ListTile _createListTile(
     BuildContext context,
     String title,
     IconData icon,

@@ -18,12 +18,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gank/i10n/localization_intl.dart';
 
+/// 加载指定页面指定数量的数据
 typedef Future<List<T>> PageRequest<T>(int page, int pageSize);
+/// 构建 Item 小部件
 typedef Widget ItemBuilder<T>(BuildContext context, int index, T item);
+/// 处理流式布局中指定位置的小部件所占的格子数
 typedef StaggeredTile StaggeredTileBuilder<T>(BuildContext context, int index, T item);
 
+/// 流式布局的类型
 enum FlowType { LIST, GRID, STAGGERED_GRID }
 
+/// 流式布局的小部件
 class SuperFlowView<T> extends StatefulWidget {
   final FlowType type;
   final ScrollPhysics physics;
@@ -39,6 +44,7 @@ class SuperFlowView<T> extends StatefulWidget {
   final Widget loadingMoreWidget;
   final Widget noMoreWidget;
 
+  /// 创建流式布局小部件
   SuperFlowView({
     Key key,
     this.type = FlowType.LIST,
@@ -86,19 +92,21 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
 
     _loadData();
 
+    // 创建 Item 构建器
     _itemBuilder = (context, index) {
       if (_dataList.isEmpty) {
-        return emptyWidget();
+        return _emptyWidget();
       } else if (index < _dataList.length) {
         return widget.itemBuilder(context, index, _dataList[index]);
       } else if (_isNoMore) {
-        return noMoreWidget();
+        return _noMoreWidget();
       } else {
-        return loadingMoreWidget();
+        return _loadingMoreWidget();
       }
     };
 
     if (widget.type == FlowType.GRID || widget.type == FlowType.STAGGERED_GRID) {
+      // 创建 Item 占位数处理器
       _staggeredTileBuilder = (index) {
         if (index == _dataList.length) {
           return StaggeredTile.fit(widget.crossAxisCount);
@@ -111,6 +119,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     }
     _scrollController = ScrollController();
     _scrollController.addListener(() {
+      // 滚动到底部加载更多数据
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _loadMore();
       }
@@ -123,18 +132,18 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
       child: FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
-            return loadingWidget();
+            return _loadingWidget();
           } else if (snapshot.hasError || !snapshot.hasData) {
-            return errorWidget();
+            return _errorWidget();
           } else {
             switch (widget.type) {
               case FlowType.GRID:
               case FlowType.STAGGERED_GRID:
-                return createStaggeredGridView();
+                return _createStaggeredGridView();
                 break;
               case FlowType.LIST:
               default:
-                return createListView();
+                return _createListView();
                 break;
             }
           }
@@ -145,11 +154,13 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     );
   }
 
-  Widget loadingWidget() {
+  /// 获取正在加载数据的布局
+  Widget _loadingWidget() {
     return widget.loadingWidget ?? const Center(child: CircularProgressIndicator());
   }
 
-  Widget errorWidget() {
+  /// 获取加载数据失败的布局
+  Widget _errorWidget() {
     return Center(
       child: FlatButton(
         onPressed: () => setState(() => _loadData()),
@@ -162,11 +173,13 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     );
   }
 
-  Widget emptyWidget() {
+  /// 获取数据为空的布局
+  Widget _emptyWidget() {
     return widget.emptyWidget ?? Center(child: Text(GankLocalizations.of(context).empty));
   }
 
-  Widget loadingMoreWidget() {
+  /// 获取正在加载更多数据的布局
+  Widget _loadingMoreWidget() {
     return widget.loadingMoreWidget ??
         Padding(
           padding: EdgeInsets.all(10),
@@ -175,7 +188,8 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
         );
   }
 
-  Widget noMoreWidget() {
+  /// 获取没有更多数据可加载的布局
+  Widget _noMoreWidget() {
     return widget.noMoreWidget ??
         Padding(
           padding: EdgeInsets.all(10),
@@ -183,7 +197,8 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
         );
   }
 
-  ListView createListView() {
+  /// 创建 List 列表布局
+  ListView _createListView() {
     return ListView.builder(
       physics: widget.physics,
       controller: _scrollController,
@@ -192,7 +207,8 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     );
   }
 
-  StaggeredGridView createStaggeredGridView() {
+  /// 创建流式布局/宫格布局
+  StaggeredGridView _createStaggeredGridView() {
     return StaggeredGridView.countBuilder(
       physics: widget.physics,
       controller: _scrollController,
@@ -209,6 +225,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     super.dispose();
   }
 
+  /// 加载数据
   _loadData() {
     Future<List<T>> _load() async {
       _isLoading = true;
@@ -224,6 +241,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     _future = _load();
   }
 
+  /// 刷新数据
   Future<void> _refresh() async {
     if (_isLoading) {
       return;
@@ -239,6 +257,7 @@ class _SuperFlowViewState<T> extends State<SuperFlowView<T>> {
     });
   }
 
+  /// 加载更多数据
   void _loadMore() async {
     if (_isLoading) {
       return;

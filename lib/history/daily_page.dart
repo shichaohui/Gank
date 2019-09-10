@@ -17,10 +17,12 @@
 import 'package:flutter/material.dart';
 import 'package:gank/gank_widget/daily_body.dart';
 
+/// 显示指定日期的数据的页面
 class DailyPage extends StatefulWidget {
   final String title;
   final String date;
 
+  /// 生成指定日期 [date] 的页面
   DailyPage(this.date) : title = date;
 
   @override
