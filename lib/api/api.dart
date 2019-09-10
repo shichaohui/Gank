@@ -42,8 +42,10 @@ class API {
     Map<String, dynamic> map = json.decode(response.data);
     if (map["error"]) {
       return Future.error(DioError(message: map["msg"]));
-    } else {
+    } else if(map["results"] is List<dynamic>) {
       return Future.value((map["results"] as List<dynamic>).map((json) => handler(json)).toList());
+    } else {
+      return Future.value(map["results"]);
     }
   }
 
