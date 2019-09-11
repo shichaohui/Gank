@@ -16,6 +16,16 @@ A new Flutter application for gank.io .
 * Switch theme and language
 * ...
 
+## Using plugins
+* [cached_network_image](https://pub.dev/packages/cached_network_image)
+* [flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view)
+* [webview_flutter](https://pub.dev/packages/webview_flutter)
+* [dio](https://pub.dev/packages/dio)
+* [json_serializable](https://pub.dev/packages/json_serializable)
+* [shared_preferences](https://pub.dev/packages/shared_preferences)
+* [provide](https://pub.dev/packages/provide)
+* [intl](https://pub.dev/packages/intl)
+
 ## What can you get?
 
 * The basis of flutter.
