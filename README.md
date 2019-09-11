@@ -8,11 +8,12 @@ A new Flutter application for gank.io .
 
 ## Features
 
-* The latest ganks.
-* The history ganks.
-* Category view ganks.
-* The welfare images.
-* Release ganks.
+* The latest ganks
+* The history ganks
+* Category view ganks
+* The welfare images
+* Release ganks
+* Share ganks
 * Switch theme and language
 * ...
 
@@ -25,6 +26,7 @@ A new Flutter application for gank.io .
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
 * [provide](https://pub.dev/packages/provide)
 * [intl](https://pub.dev/packages/intl)
+* [share](https://pub.dev/packages/share)
 
 ## What can you get?
 

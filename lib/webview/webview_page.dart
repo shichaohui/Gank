@@ -15,6 +15,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 /// WebView 页面
@@ -53,6 +54,9 @@ class _WebViewPageState extends State<WebViewPage> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: true,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.share), onPressed: () => Share.share(widget.url)),
+        ],
       ),
       body: WillPopScope(child: Stack(children: children), onWillPop: _goBack),
     );
