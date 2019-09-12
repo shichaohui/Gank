@@ -6,8 +6,8 @@ A new Flutter application for gank.io .
 
 |  |  |  |
 |----|----|----|
-| <img src="./screenshots/home.jpg" width=300> | <img src="./screenshots/drawer.jpg" width=300> | <img src="./screenshots/history.jpg" width=300> |
-| <img src="./screenshots/category.jpg" width=300> | <img src="./screenshots/welfare.jpg" width=300> | <img src="./screenshots/favorite.jpg" width=300> |
+| <img src="./screenshots/home.jpg" width=300> | <img src="./screenshots/drawer.jpg" width=300> | <img src="./screenshots/category.jpg" width=300> |
+| <img src="./screenshots/history.jpg" width=300> | <img src="./screenshots/welfare.jpg" width=300> | <img src="./screenshots/favorite.jpg" width=300> |
 | <img src="./screenshots/release.jpg" width=300> | <img src="./screenshots/theme.jpg" width=300> | <img src="./screenshots/language.jpg" width=300> |
 
 ## Features
