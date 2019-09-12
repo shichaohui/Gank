@@ -4,11 +4,17 @@ A new Flutter application for gank.io .
 
 ## Screenshots
 
-|  |  |  |
-|----|----|----|
 | <img src="./screenshots/home.jpg" width=300> | <img src="./screenshots/drawer.jpg" width=300> | <img src="./screenshots/category.jpg" width=300> |
+|:----:|:----:|:----:|
+| 首页 | 抽屉 | 分类 |
+
 | <img src="./screenshots/history.jpg" width=300> | <img src="./screenshots/welfare.jpg" width=300> | <img src="./screenshots/favorite.jpg" width=300> |
+|:----:|:----:|:----:|
+| 历史 | 福利 | 收藏 |
+
 | <img src="./screenshots/release.jpg" width=300> | <img src="./screenshots/theme.jpg" width=300> | <img src="./screenshots/language.jpg" width=300> |
+|:----:|:----:|:----:|
+| 发布 | 主题 | 语言 |
 
 ## Features
 
