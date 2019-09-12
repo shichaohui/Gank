@@ -14,6 +14,7 @@ A new Flutter application for gank.io .
 * The welfare images
 * Release ganks
 * Share ganks
+* Favorite ganks
 * Switch theme and language
 * ...
 
@@ -24,6 +25,7 @@ A new Flutter application for gank.io .
 * [dio](https://pub.dev/packages/dio)
 * [json_serializable](https://pub.dev/packages/json_serializable)
 * [shared_preferences](https://pub.dev/packages/shared_preferences)
+* [sqflite](https://pub.dev/packages/sqflite)
 * [provide](https://pub.dev/packages/provide)
 * [intl](https://pub.dev/packages/intl)
 * [share](https://pub.dev/packages/share)
@@ -33,8 +35,9 @@ A new Flutter application for gank.io .
 * The basis of flutter.
 * Custom zoom box for image or any child widget.
 * Refresh and load more of the ListView/GridView.
-* Use provide to achieve skin(Theme) switching.
-* Use intl to do i18n.
+* Using provide to achieve skin(Theme) switching.
+* Using intl to do i18n.
+* Using database by sqflite.
 * ...
 
 ## Licensed

@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:gank/db/db_helper.dart';
 import 'package:gank/home/home_page.dart';
 import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_model.dart';
@@ -25,6 +26,10 @@ void main() => runApp(Store.init(child: MyApp()));
 
 /// 应用程序入口
 class MyApp extends StatelessWidget {
+  MyApp(){
+    DBHelper.instance.openDB();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Store.connect<SettingModel>(

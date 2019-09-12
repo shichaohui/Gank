@@ -16,6 +16,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gank/category/category_page.dart';
+import 'package:gank/favorite/favorite_page.dart';
 import 'package:gank/history/history_page.dart';
 import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_page.dart';
@@ -51,6 +52,9 @@ class HomeDrawer extends StatelessWidget {
           }),
           _createListTile(context, localizations.releaseGankTitle, Icons.cloud_upload, () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ReleaseGankPage()));
+          }),
+          _createListTile(context, localizations.favoriteTitle, Icons.favorite, () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage()));
           }),
           Divider(),
           _createListTile(context, localizations.settingsTitle, Icons.settings, () {

@@ -162,5 +162,11 @@
     "description": "跟随系统",
     "type": "text",
     "placeholders": {}
+  },
+  "favoriteTitle": "收藏",
+  "@favoriteTitle": {
+    "description": "收藏页面的标题",
+    "type": "text",
+    "placeholders": {}
   }
 }

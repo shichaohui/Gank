@@ -1,5 +1,5 @@
 {
-  "@@last_modified": "2019-09-10T17:45:45.974496",
+  "@@last_modified": "2019-09-11T18:33:53.646525",
   "appTitle": "Gank",
   "@appTitle": {
     "description": "Title for current application",
@@ -159,6 +159,12 @@
   "followSystem": "Follow System",
   "@followSystem": {
     "description": "follow system",
+    "type": "text",
+    "placeholders": {}
+  },
+  "favoriteTitle": "Favorite",
+  "@favoriteTitle": {
+    "description": "The title of favorite ganks page",
     "type": "text",
     "placeholders": {}
   }

@@ -248,6 +248,14 @@ class GankLocalizations {
       desc: 'follow system',
     );
   }
+
+  String get favoriteTitle {
+    return Intl.message(
+      'Favorite',
+      name: 'favoriteTitle',
+      desc: 'The title of favorite ganks page',
+    );
+  }
 }
 
 class GankLocalizationsDelegate extends LocalizationsDelegate<GankLocalizations> {

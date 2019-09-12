@@ -82,7 +82,7 @@ class GankCard extends StatelessWidget {
   /// 在 [WebViewPage] 显示当前干货的内容
   GestureTapCallback showGank(BuildContext context) {
     return () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(url: gank.url)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(gank)));
     };
   }
 }

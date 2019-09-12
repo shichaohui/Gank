@@ -162,5 +162,11 @@
     "description": "follow system",
     "type": "text",
     "placeholders": {}
+  },
+  "favoriteTitle": "Favorite",
+  "@favoriteTitle": {
+    "description": "The title of favorite ganks page",
+    "type": "text",
+    "placeholders": {}
   }
 }
