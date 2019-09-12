@@ -37,7 +37,7 @@ class HomeDrawer extends StatelessWidget {
             child: Center(
               child: Text(
                 GankLocalizations.of(context).appTitle,
-                style: TextStyle(color: Theme.of(context).primaryTextTheme.title.color, fontSize: 22),
+                style: Theme.of(context).primaryTextTheme.title.copyWith(fontSize: 22),
               ),
             ),
           ),

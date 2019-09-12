@@ -20,8 +20,10 @@ import 'package:gank/i10n/localization_intl.dart';
 
 /// 加载指定页面指定数量的数据
 typedef Future<List<T>> PageRequest<T>(int page, int pageSize);
+
 /// 构建 Item 小部件
 typedef Widget ItemBuilder<T>(BuildContext context, int index, T item);
+
 /// 处理流式布局中指定位置的小部件所占的格子数
 typedef StaggeredTile StaggeredTileBuilder<T>(BuildContext context, int index, T item);
 

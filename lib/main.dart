@@ -26,7 +26,7 @@ void main() => runApp(Store.init(child: MyApp()));
 
 /// 应用程序入口
 class MyApp extends StatelessWidget {
-  MyApp(){
+  MyApp() {
     DBHelper.instance.openDB();
   }
 

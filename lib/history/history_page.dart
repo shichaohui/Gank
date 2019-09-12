@@ -24,7 +24,6 @@ import 'package:gank/widget/super_flow_view.dart';
 
 /// 历史数据页面
 class HistoryPage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _HistoryPageState();

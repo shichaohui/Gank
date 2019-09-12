@@ -76,13 +76,6 @@ class _WelfarePageState extends State<WelfarePage> with SingleTickerProviderStat
 
   AppBar _createAppBar(BuildContext context) {
     return AppBar(
-      leading: FlatButton(
-        onPressed: () => Navigator.pop(context),
-        child: Icon(
-          Icons.arrow_back,
-          color: Theme.of(context).primaryTextTheme.title.color,
-        ),
-      ),
       title: Text(GankLocalizations.of(context).welfareTitle),
       centerTitle: true,
     );

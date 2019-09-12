@@ -43,6 +43,7 @@ class GestureZoomBox extends StatefulWidget {
 class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStateMixin {
   // 缩放动画控制器
   AnimationController _scaleAnimController;
+
   // 偏移动画控制器
   AnimationController _offsetAnimController;
 
@@ -51,6 +52,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
 
   // 当前缩放值
   double _scale = 1.0;
+
   // 当前偏移值
   Offset _offset = Offset.zero;
 
@@ -182,7 +184,8 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
       if (context.size.height * _scale <= MediaQuery.of(context).size.height) {
         targetOffsetY = 0.0;
       } else {
-        double scaleOffsetY = ((context.size.height * _scale) - MediaQuery.of(context).size.height) / 2;
+        double scaleOffsetY =
+            ((context.size.height * _scale) - MediaQuery.of(context).size.height) / 2;
         if (_offset.dy > scaleOffsetY) {
           targetOffsetY = scaleOffsetY;
         } else if (_offset.dy < -scaleOffsetY) {
@@ -225,7 +228,7 @@ class _GestureZoomBoxState extends State<GestureZoomBox> with TickerProviderStat
     _offsetAnimController?.dispose();
     _offsetAnimController = AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     Animation anim =
-    Tween<Offset>(begin: _offset, end: targetOffset).animate(_offsetAnimController);
+        Tween<Offset>(begin: _offset, end: targetOffset).animate(_offsetAnimController);
     anim.addListener(() {
       setState(() {
         _offset = anim.value;
