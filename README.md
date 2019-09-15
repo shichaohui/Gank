@@ -50,6 +50,10 @@ A new Flutter application for gank.io .
 * Using database by sqflite.
 * ...
 
+## Download
+
+[Android download](./packet/app-release.apk)
+
 ## Licensed
 
 ```
