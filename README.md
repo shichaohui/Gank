@@ -52,7 +52,9 @@ A new Flutter application for gank.io .
 
 ## Download
 
-[Android download](./packet/app-release.apk)
+| ![APK file](./packet/app-release.png) |
+|:----:|
+| [Android download](./packet/app-release.apk?raw=true) |
 
 ## Licensed
 
