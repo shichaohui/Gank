@@ -7,8 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:gank/home/home_page.dart';
 import 'package:gank/main.dart';
 
 void main() {

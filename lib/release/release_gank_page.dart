@@ -169,7 +169,7 @@ class _ReleaseGankPageState extends State<ReleaseGankPage> {
     API().releaseGank(url, desc, who, _type).then((result) {
       _showReleaseResult(GankLocalizations.of(context).releaseSuccess);
     }).catchError((error) {
-      _showReleaseResult(error?.message ?? GankLocalizations.of(context).releaseFailed);
+      _showReleaseResult(error?.error ?? GankLocalizations.of(context).releaseFailed);
     });
   }
 

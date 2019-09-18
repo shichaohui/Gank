@@ -43,7 +43,7 @@ class API {
   Future<List<T>> _handleResponse<T>(Response response, _ResultHandler<T> handler) {
     Map<String, dynamic> map = json.decode(response.data);
     if (map["error"]) {
-      return Future.error(DioError(message: map["msg"]));
+      return Future.error(DioError(error: map["msg"]));
     } else if (map["results"] is List<dynamic>) {
       return Future.value((map["results"] as List<dynamic>).map((json) => handler(json)).toList());
     } else {
@@ -86,13 +86,14 @@ class API {
 
   /// 提审一条干货到干货集中营后台
   Future<void> releaseGank(String url, String desc, String who, String type) async {
-    FormData data = FormData();
-    data.add("url", url);
-    data.add("desc", desc);
-    data.add("who", who);
-    data.add("type", type);
-    data.add("debug", const bool.fromEnvironment("dart.vm.product"));
-    var response = await _dio.post<String>("add2gank", data: data);
+    Map<String, dynamic> dataMap = {
+      "url": url,
+      "desc": desc,
+      "who": who,
+      "type": type,
+      "debug": const bool.fromEnvironment("dart.vm.product"),
+    };
+    var response = await _dio.post<String>("add2gank", data: FormData.fromMap(dataMap));
     return _handleResponse(response, (json) {});
   }
 }
