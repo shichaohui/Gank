@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:gank/api/api.dart';
 import 'package:gank/entity/entity.dart';
 import 'package:gank/i10n/localization_intl.dart';
-import 'package:gank/widget/gesture_zoom_box.dart';
 import 'package:gank/widget/super_flow_view.dart';
+import 'package:gesture_zoom_box/gesture_zoom_box.dart';
 
 /// 福利页面
 class WelfarePage extends StatefulWidget {

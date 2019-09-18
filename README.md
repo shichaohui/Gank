@@ -39,11 +39,12 @@ A new Flutter application for gank.io .
 * [provide](https://pub.dev/packages/provide)
 * [intl](https://pub.dev/packages/intl)
 * [share](https://pub.dev/packages/share)
+* [gesture_zoom_box](https://pub.dev/packages/gesture_zoom_box)
 
 ## What can you get?
 
 * The basis of flutter.
-* Custom zoom box for image or any child widget.
+* Custom [zoom box](https://github.com/shichaohui/gesture_zoom_box) for image or any child widget.
 * Refresh and load more of the ListView/GridView.
 * Using provide to achieve skin(Theme) switching.
 * Using intl to do i18n.
