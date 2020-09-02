@@ -22,7 +22,10 @@ import 'package:gank/i10n/localization_intl.dart';
 import 'package:gank/setting/setting_model.dart';
 
 /// 启动应用程序
-void main() => runApp(Store.init(child: MyApp()));
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(Store.init(child: MyApp()));
+}
 
 /// 应用程序入口
 class MyApp extends StatelessWidget {
